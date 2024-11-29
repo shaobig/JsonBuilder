@@ -55,4 +55,9 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader 
         this.stringPathReader = stringPathReader;
     }
 
+    @Override
+    public String toString() {
+        return getJsonNode().toString();
+    }
+
 }

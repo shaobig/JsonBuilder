@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.factory;
+package org.shaobig.json.builder;
 
 public interface EntityFactory<T> {
 

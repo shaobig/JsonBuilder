@@ -1,13 +1,7 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.NodeInserter;
-import org.shaobig.json.builder.factory.GenericPathReaderEntityFactory;
-import org.shaobig.json.builder.factory.JsonNodeEntityFactory;
-import org.shaobig.json.builder.factory.JsonObjectManagerEntityFactory;
-import org.shaobig.json.builder.factory.MergerNodeCreatorEntityFactory;
 import org.shaobig.json.builder.reader.StringPathReader;
-import org.shaobig.json.builder.reader.StringValueReader;
 
 public class JsonObject implements NodeInserter, StringPathReader {
 
@@ -37,7 +31,7 @@ public class JsonObject implements NodeInserter, StringPathReader {
 
     @Override
     public String toString() {
-        return getJsonObjectManager().getJsonNode().toString();
+        return getJsonObjectManager().toString();
     }
 
     public static class Builder implements NodeBuilderInserter, JsonObjectCreator {
@@ -45,8 +39,7 @@ public class JsonObject implements NodeInserter, StringPathReader {
         private JsonObjectManager jsonObjectManager;
 
         public Builder() {
-            JsonNode jsonNode = new JsonNodeEntityFactory().createEntity();
-            this.jsonObjectManager = new JsonObjectManagerEntityFactory(() -> jsonNode, new MergerNodeCreatorEntityFactory<>(jsonNode), new GenericPathReaderEntityFactory<>(jsonNode, new StringValueReader(), "")).createEntity();
+            this.jsonObjectManager = new ProxyJsonObjectManagerEntityFactory().createEntity();
         }
 
         @Override

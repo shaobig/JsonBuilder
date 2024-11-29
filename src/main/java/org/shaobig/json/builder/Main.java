@@ -9,8 +9,6 @@ public class Main {
                 .insertNode("a.b.c", "ABRA")
                 .insertNode("a.b.d", "CADABRA")
                 .insertNode("a.b.e", 55)
-                .insertNode("a.b.f.g.a.b.c", "FFFF")
-                .insertNode("a", "FFFF")
                 .createJsonObject();
         System.out.println(jsonObject);
     }

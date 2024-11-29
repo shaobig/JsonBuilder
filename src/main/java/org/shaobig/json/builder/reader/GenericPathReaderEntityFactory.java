@@ -1,7 +1,7 @@
-package org.shaobig.json.builder.factory;
+package org.shaobig.json.builder.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.reader.*;
+import org.shaobig.json.builder.EntityFactory;
 
 public class GenericPathReaderEntityFactory<T> implements EntityFactory<PathReader<T>> {
 

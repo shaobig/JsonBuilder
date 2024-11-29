@@ -1,11 +1,11 @@
-package org.shaobig.json.builder.factory;
+package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
-import org.shaobig.json.builder.object.JsonObjectManager;
+import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.reader.PathReader;
 
-public class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
+class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
     private EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory;
@@ -19,7 +19,7 @@ public class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectM
 
     @Override
     public JsonObjectManager createEntity() {
-        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), (MergerNodeCreator<Object>) getObjectNodeCreatorEntityFactory().createEntity(), getStringPathReaderEntityFactory().createEntity());
+        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), getObjectNodeCreatorEntityFactory().createEntity(), getStringPathReaderEntityFactory().createEntity());
     }
 
     public EntityFactory<JsonNode> getJsonNodeEntityFactory() {

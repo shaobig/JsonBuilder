@@ -1,8 +1,7 @@
 package org.shaobig.json.builder.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.factory.ClassNodeCreatorEntityFactory;
-import org.shaobig.json.builder.factory.EntityFactory;
+import org.shaobig.json.builder.EntityFactory;
 
 public class FactoryNodeCreator<T> implements NodeCreator<T> {
 

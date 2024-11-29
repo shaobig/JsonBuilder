@@ -1,8 +1,8 @@
-package org.shaobig.json.builder.factory;
+package org.shaobig.json.builder.creator;
 
-import org.shaobig.json.builder.creator.IntegerNodeCreator;
-import org.shaobig.json.builder.creator.NodeCreator;
-import org.shaobig.json.builder.creator.StringNodeCreator;
+import org.shaobig.json.builder.EntityFactory;
+import org.shaobig.json.builder.creator.entity.IntegerNodeCreator;
+import org.shaobig.json.builder.creator.entity.StringNodeCreator;
 
 import java.util.Map;
 import java.util.Optional;
