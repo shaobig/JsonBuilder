@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.builder;
+package org.shaobig.json.builder.object;
 
 public interface JsonObjectCreator {
 

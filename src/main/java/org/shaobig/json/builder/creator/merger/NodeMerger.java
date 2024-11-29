@@ -1,9 +1,9 @@
 package org.shaobig.json.builder.creator.merger;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public interface NodeMerger {
 
-    ObjectNode mergeValue(ObjectNode parentNode, ObjectNode childNode);
+    JsonNode mergeValue(JsonNode parentNode, JsonNode childNode);
 
 }
