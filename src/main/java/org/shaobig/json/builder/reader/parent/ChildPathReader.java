@@ -1,4 +1,6 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.parent;
+
+import org.shaobig.json.builder.reader.PathReader;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

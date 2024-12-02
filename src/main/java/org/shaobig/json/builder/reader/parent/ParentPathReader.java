@@ -1,4 +1,6 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.parent;
+
+import org.shaobig.json.builder.reader.PathReader;
 
 public class ParentPathReader implements PathReader<String> {
 
