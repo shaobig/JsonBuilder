@@ -10,7 +10,7 @@ public class Main {
                 .insertNode("a.b.d", "CADABRA")
                 .insertNode("a.b.e", 55)
                 .createJsonObject();
-        System.out.println(jsonObject.readString("a.b.e"));
+        System.out.println(jsonObject.readString("a.b.c"));
     }
 
 }

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Arrays;
 
-public class IterativeJsonNodePathReader extends NodePathReader {
+public class IterativeJsonJsonNodePathReader extends JsonNodePathReader {
 
     private static final String DELIMITER_REG_EXP = "\\.";
 
-    public IterativeJsonNodePathReader(JsonNode jsonNode) {
+    public IterativeJsonJsonNodePathReader(JsonNode jsonNode) {
         super(jsonNode);
     }
 

@@ -6,7 +6,7 @@ import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
 import org.shaobig.json.builder.reader.GenericPathReader;
 import org.shaobig.json.builder.reader.StringPathReader;
 
-public class JsonObjectManager implements NodeCreator<Object>, StringPathReader {
+public class JsonObjectManager implements NodeCreator<Object>, StringPathReader, JsonNodeSetter {
 
     private JsonNode jsonNode;
     private MergerNodeCreator<Object> objectNodeCreator;
@@ -34,10 +34,11 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader 
         return jsonNode;
     }
 
+    @Override
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
         getObjectNodeCreator().setJsonNode(jsonNode);
-        getStringPathReader().getJsonNodePathReader().setJsonNode(jsonNode);
+        getStringPathReader().setJsonNode(jsonNode);
     }
 
     public MergerNodeCreator<Object> getObjectNodeCreator() {
