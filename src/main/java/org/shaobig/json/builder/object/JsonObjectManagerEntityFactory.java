@@ -1,17 +1,17 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.reader.PathReader;
+import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
+import org.shaobig.json.builder.reader.GenericPathReader;
 
 class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
     private EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory;
-    private EntityFactory<PathReader<String>> stringPathReaderEntityFactory;
+    private EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory;
 
-    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory, EntityFactory<PathReader<String>> stringPathReaderEntityFactory) {
+    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory, EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory) {
         this.jsonNodeEntityFactory = jsonNodeEntityFactory;
         this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
         this.stringPathReaderEntityFactory = stringPathReaderEntityFactory;
@@ -38,11 +38,11 @@ class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager>
         this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
     }
 
-    public EntityFactory<PathReader<String>> getStringPathReaderEntityFactory() {
+    public EntityFactory<GenericPathReader<String>> getStringPathReaderEntityFactory() {
         return stringPathReaderEntityFactory;
     }
 
-    public void setStringPathReaderEntityFactory(EntityFactory<PathReader<String>> stringPathReaderEntityFactory) {
+    public void setStringPathReaderEntityFactory(EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory) {
         this.stringPathReaderEntityFactory = stringPathReaderEntityFactory;
     }
 

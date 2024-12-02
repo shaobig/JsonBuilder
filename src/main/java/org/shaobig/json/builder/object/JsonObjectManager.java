@@ -3,16 +3,16 @@ package org.shaobig.json.builder.object;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.NodeCreator;
 import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
-import org.shaobig.json.builder.reader.PathReader;
+import org.shaobig.json.builder.reader.GenericPathReader;
 import org.shaobig.json.builder.reader.StringPathReader;
 
 public class JsonObjectManager implements NodeCreator<Object>, StringPathReader {
 
     private JsonNode jsonNode;
     private MergerNodeCreator<Object> objectNodeCreator;
-    private PathReader<String> stringPathReader;
+    private GenericPathReader<String> stringPathReader;
 
-    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreator<Object> objectNodeCreator, PathReader<String> stringPathReader) {
+    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreator<Object> objectNodeCreator, GenericPathReader<String> stringPathReader) {
         this.jsonNode = jsonNode;
         this.objectNodeCreator = objectNodeCreator;
         this.stringPathReader = stringPathReader;
@@ -37,6 +37,7 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader 
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
         getObjectNodeCreator().setJsonNode(jsonNode);
+        getStringPathReader().getJsonNodePathReader().setJsonNode(jsonNode);
     }
 
     public MergerNodeCreator<Object> getObjectNodeCreator() {
@@ -47,11 +48,11 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader 
         this.objectNodeCreator = objectNodeCreator;
     }
 
-    public PathReader<String> getStringPathReader() {
+    public GenericPathReader<String> getStringPathReader() {
         return stringPathReader;
     }
 
-    public void setStringPathReader(PathReader<String> stringPathReader) {
+    public void setStringPathReader(GenericPathReader<String> stringPathReader) {
         this.stringPathReader = stringPathReader;
     }
 

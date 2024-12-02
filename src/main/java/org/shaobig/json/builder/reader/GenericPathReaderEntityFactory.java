@@ -2,24 +2,20 @@ package org.shaobig.json.builder.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.reader.parent.ChildPathReader;
-import org.shaobig.json.builder.reader.parent.ParentPathReader;
 
-public class GenericPathReaderEntityFactory<T> implements EntityFactory<PathReader<T>> {
+public class GenericPathReaderEntityFactory<T> implements EntityFactory<GenericPathReader<T>> {
 
     private JsonNode jsonNode;
     private ValueReader<T> valueReader;
-    private String path;
 
-    public GenericPathReaderEntityFactory(JsonNode jsonNode, ValueReader<T> valueReader, String path) {
+    public GenericPathReaderEntityFactory(JsonNode jsonNode, ValueReader<T> valueReader) {
         this.jsonNode = jsonNode;
         this.valueReader = valueReader;
-        this.path = path;
     }
 
     @Override
     public GenericPathReader<T> createEntity() {
-        return new GenericPathReader<>(new JsonNodePathReader(new NodePathReader(getJsonNode()), new ParentPathReader(new ChildPathReader())), getValueReader());
+        return new GenericPathReader<>(new IterativeJsonNodePathReader(getJsonNode()), getValueReader());
     }
 
     public JsonNode getJsonNode() {
@@ -36,14 +32,6 @@ public class GenericPathReaderEntityFactory<T> implements EntityFactory<PathRead
 
     public void setValueReader(ValueReader<T> valueReader) {
         this.valueReader = valueReader;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
 }
