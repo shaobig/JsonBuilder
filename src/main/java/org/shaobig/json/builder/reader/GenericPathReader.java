@@ -15,19 +15,19 @@ public class GenericPathReader<T> implements PathReader<T>, JsonNodeSetter {
 
     @Override
     public T readPath(String path) {
-        return getValueReader().readValue(getNodePathReader().readPath(path));
+        return getValueReader().readValue(getJsonNodePathReader().readPath(path));
     }
 
     @Override
     public void setJsonNode(JsonNode jsonNode) {
-        getNodePathReader().setJsonNode(jsonNode);
+        getJsonNodePathReader().setJsonNode(jsonNode);
     }
 
-    public JsonNodePathReader getNodePathReader() {
+    public JsonNodePathReader getJsonNodePathReader() {
         return jsonNodePathReader;
     }
 
-    public void setNodePathReader(JsonNodePathReader jsonNodePathReader) {
+    public void setJsonNodePathReader(JsonNodePathReader jsonNodePathReader) {
         this.jsonNodePathReader = jsonNodePathReader;
     }
 

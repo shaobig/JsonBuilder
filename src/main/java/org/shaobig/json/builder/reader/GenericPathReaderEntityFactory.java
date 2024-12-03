@@ -15,7 +15,7 @@ public class GenericPathReaderEntityFactory<T> implements EntityFactory<GenericP
 
     @Override
     public GenericPathReader<T> createEntity() {
-        return new GenericPathReader<>(new IterativeJsonJsonNodePathReader(getJsonNode()), getValueReader());
+        return new GenericPathReader<>(new ValidationJsonNodePathReader(new IterativeJsonNodePathReader(getJsonNode())), getValueReader());
     }
 
     public JsonNode getJsonNode() {

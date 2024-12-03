@@ -9,17 +9,17 @@ class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager>
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
     private EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory;
-    private EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory;
+    private EntityFactory<GenericPathReader<String>> stringGenericPathReader;
 
-    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory, EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory) {
+    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory, EntityFactory<GenericPathReader<String>> stringGenericPathReader) {
         this.jsonNodeEntityFactory = jsonNodeEntityFactory;
         this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
-        this.stringPathReaderEntityFactory = stringPathReaderEntityFactory;
+        this.stringGenericPathReader = stringGenericPathReader;
     }
 
     @Override
     public JsonObjectManager createEntity() {
-        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), getObjectNodeCreatorEntityFactory().createEntity(), getStringPathReaderEntityFactory().createEntity());
+        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), getObjectNodeCreatorEntityFactory().createEntity(), getStringGenericPathReader().createEntity());
     }
 
     public EntityFactory<JsonNode> getJsonNodeEntityFactory() {
@@ -38,12 +38,13 @@ class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager>
         this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
     }
 
-    public EntityFactory<GenericPathReader<String>> getStringPathReaderEntityFactory() {
-        return stringPathReaderEntityFactory;
+
+    public EntityFactory<GenericPathReader<String>> getStringGenericPathReader() {
+        return stringGenericPathReader;
     }
 
-    public void setStringPathReaderEntityFactory(EntityFactory<GenericPathReader<String>> stringPathReaderEntityFactory) {
-        this.stringPathReaderEntityFactory = stringPathReaderEntityFactory;
+    public void setStringGenericPathReader(EntityFactory<GenericPathReader<String>> stringGenericPathReader) {
+        this.stringGenericPathReader = stringGenericPathReader;
     }
 
 }

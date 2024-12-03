@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.creator.merger.MergerNodeCreatorEntityFactory;
 import org.shaobig.json.builder.reader.GenericPathReaderEntityFactory;
-import org.shaobig.json.builder.reader.StringValueReader;
+import org.shaobig.json.builder.reader.entity.StringValueReader;
 
 public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 

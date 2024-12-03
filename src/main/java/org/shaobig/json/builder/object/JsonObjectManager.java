@@ -10,12 +10,12 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader,
 
     private JsonNode jsonNode;
     private MergerNodeCreator<Object> objectNodeCreator;
-    private GenericPathReader<String> stringPathReader;
+    private GenericPathReader<String> stringGenericPathReader;
 
-    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreator<Object> objectNodeCreator, GenericPathReader<String> stringPathReader) {
+    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreator<Object> objectNodeCreator, GenericPathReader<String> stringGenericPathReader) {
         this.jsonNode = jsonNode;
         this.objectNodeCreator = objectNodeCreator;
-        this.stringPathReader = stringPathReader;
+        this.stringGenericPathReader = stringGenericPathReader;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader,
 
     @Override
     public String readString(String path) {
-        return getStringPathReader().readPath(path);
+        return getStringGenericPathReader().readPath(path);
     }
 
     public JsonNode getJsonNode() {
@@ -38,7 +38,7 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader,
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
         getObjectNodeCreator().setJsonNode(jsonNode);
-        getStringPathReader().setJsonNode(jsonNode);
+        getStringGenericPathReader().setJsonNode(jsonNode);
     }
 
     public MergerNodeCreator<Object> getObjectNodeCreator() {
@@ -49,12 +49,12 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader,
         this.objectNodeCreator = objectNodeCreator;
     }
 
-    public GenericPathReader<String> getStringPathReader() {
-        return stringPathReader;
+    public GenericPathReader<String> getStringGenericPathReader() {
+        return stringGenericPathReader;
     }
 
-    public void setStringPathReader(GenericPathReader<String> stringPathReader) {
-        this.stringPathReader = stringPathReader;
+    public void setStringGenericPathReader(GenericPathReader<String> stringGenericPathReader) {
+        this.stringGenericPathReader = stringGenericPathReader;
     }
 
     @Override
