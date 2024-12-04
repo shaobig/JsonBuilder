@@ -1,9 +1,10 @@
-package org.shaobig.json.builder.object;
+package org.shaobig.json.builder.object.manager.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.MergerNodeCreator;
+import org.shaobig.json.builder.object.JsonNodeSetter;
 
-public class MergerNodeCreatorManager implements StringNodeInserter, IntegerNodeInserter, JsonNodeSetter {
+public class MergerNodeCreatorManager implements StringNodeCreator, IntegerNodeCreator, JsonNodeSetter {
 
     private MergerNodeCreator<String> stringMergerNodeCreator;
     private MergerNodeCreator<Integer> integerMergerNodeCreator;
@@ -14,7 +15,7 @@ public class MergerNodeCreatorManager implements StringNodeInserter, IntegerNode
     }
 
     @Override
-    public JsonNode insertInteger(String path, Integer integer) {
+    public JsonNode createInteger(String path, Integer integer) {
         JsonNode jsonNode = getIntegerMergerNodeCreator().createNode(path, integer);
         setJsonNode(jsonNode);
         return jsonNode;

@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.object;
+package org.shaobig.json.builder.object.manager.reader;
 
 import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.reader.path.GenericPathReader;

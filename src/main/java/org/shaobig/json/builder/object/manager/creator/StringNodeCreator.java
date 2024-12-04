@@ -1,8 +1,8 @@
-package org.shaobig.json.builder.object;
+package org.shaobig.json.builder.object.manager.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public interface StringNodeInserter {
+public interface StringNodeCreator {
 
     JsonNode insertString(String path, String string);
 

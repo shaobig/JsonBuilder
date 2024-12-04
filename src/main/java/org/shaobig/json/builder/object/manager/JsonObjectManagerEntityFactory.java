@@ -2,8 +2,8 @@ package org.shaobig.json.builder.object.manager;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.object.GenericPathReaderManager;
-import org.shaobig.json.builder.object.MergerNodeCreatorManager;
+import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManager;
+import org.shaobig.json.builder.object.manager.reader.GenericPathReaderManager;
 
 public class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 

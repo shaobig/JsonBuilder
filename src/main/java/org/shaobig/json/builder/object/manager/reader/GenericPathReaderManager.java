@@ -1,6 +1,7 @@
-package org.shaobig.json.builder.object;
+package org.shaobig.json.builder.object.manager.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.shaobig.json.builder.object.JsonNodeSetter;
 import org.shaobig.json.builder.reader.path.GenericPathReader;
 import org.shaobig.json.builder.reader.path.IntegerPathReader;
 import org.shaobig.json.builder.reader.path.StringPathReader;

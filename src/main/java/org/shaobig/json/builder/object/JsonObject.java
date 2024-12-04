@@ -3,10 +3,11 @@ package org.shaobig.json.builder.object;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.object.manager.JsonObjectManager;
 import org.shaobig.json.builder.object.manager.ProxyJsonObjectManagerEntityFactory;
+import org.shaobig.json.builder.object.manager.creator.*;
 import org.shaobig.json.builder.reader.path.IntegerPathReader;
 import org.shaobig.json.builder.reader.path.StringPathReader;
 
-public class JsonObject implements StringNodeInserter, IntegerNodeInserter, StringPathReader, IntegerPathReader {
+public class JsonObject implements StringNodeCreator, IntegerNodeCreator, StringPathReader, IntegerPathReader {
 
     private JsonObjectManager jsonObjectManager;
 
@@ -20,8 +21,8 @@ public class JsonObject implements StringNodeInserter, IntegerNodeInserter, Stri
     }
 
     @Override
-    public JsonNode insertInteger(String path, Integer integer) {
-        return getJsonObjectManager().insertInteger(path, integer);
+    public JsonNode createInteger(String path, Integer integer) {
+        return getJsonObjectManager().createInteger(path, integer);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class JsonObject implements StringNodeInserter, IntegerNodeInserter, Stri
         return getJsonObjectManager().toString();
     }
 
-    public static class Builder implements StringJsonObjectBuilderInserter, IntegerJsonObjectBuilderInserter, JsonObjectCreator {
+    public static class Builder implements StringBuilderCreator, IntegerBuilderCreator, JsonObjectCreator {
 
         private JsonObjectManager jsonObjectManager;
 
@@ -60,14 +61,14 @@ public class JsonObject implements StringNodeInserter, IntegerNodeInserter, Stri
         }
 
         @Override
-        public Builder insertString(String path, String string) {
+        public Builder createString(String path, String string) {
             getJsonBuilderManager().insertString(path, string);
             return this;
         }
 
         @Override
-        public Builder insertInteger(String path, Integer integer) {
-            getJsonBuilderManager().insertInteger(path, integer);
+        public Builder createInteger(String path, Integer integer) {
+            getJsonBuilderManager().createInteger(path, integer);
             return this;
         }
 
