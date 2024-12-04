@@ -3,7 +3,7 @@ package org.shaobig.json.builder.creator.merger;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.NodeCreator;
 
-public abstract class MergerNodeCreator<T> implements NodeCreator<T> {
+public class MergerNodeCreator<T> implements NodeCreator<T> {
 
     private JsonNode jsonNode;
     private NodeMerger nodeMerger;
@@ -13,6 +13,11 @@ public abstract class MergerNodeCreator<T> implements NodeCreator<T> {
         this.jsonNode = jsonNode;
         this.nodeMerger = nodeMerger;
         this.nestedNodeCreator = nestedNodeCreator;
+    }
+
+    @Override
+    public JsonNode createNode(String path, T object) {
+        return getNodeMerger().mergeValue(getJsonNode(), getNestedNodeCreator().createNode(path, object));
     }
 
     public JsonNode getJsonNode() {

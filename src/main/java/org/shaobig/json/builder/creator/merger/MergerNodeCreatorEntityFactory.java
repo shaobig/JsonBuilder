@@ -2,21 +2,24 @@ package org.shaobig.json.builder.creator.merger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.creator.ClassNodeCreatorEntityFactory;
-import org.shaobig.json.builder.creator.FactoryNodeCreator;
 import org.shaobig.json.builder.creator.NestedNodeCreator;
+import org.shaobig.json.builder.creator.NodeCreator;
 
-public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNodeCreator<Object>> {
+public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNodeCreator<T>> {
 
     private JsonNode jsonNode;
+    private NodeMerger nodeMerger;
+    private NodeCreator<T> nodeCreator;
 
-    public MergerNodeCreatorEntityFactory(JsonNode jsonNode) {
+    public MergerNodeCreatorEntityFactory(JsonNode jsonNode, NodeMerger nodeMerger, NodeCreator<T> nodeCreator) {
         this.jsonNode = jsonNode;
+        this.nodeMerger = nodeMerger;
+        this.nodeCreator = nodeCreator;
     }
 
     @Override
-    public MergerNodeCreator<Object> createEntity() {
-        return new GenericMergerNodeCreator<>(getJsonNode(), new RecursiveNodeMerger(), new NestedNodeCreator<>(new FactoryNodeCreator<>(new ClassNodeCreatorEntityFactory<>(Object.class))));
+    public MergerNodeCreator<T> createEntity() {
+        return new GenericMergerNodeCreator<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(getNodeCreator()));
     }
 
     public JsonNode getJsonNode() {
@@ -25,6 +28,22 @@ public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNo
 
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
+    }
+
+    public NodeMerger getNodeMerger() {
+        return nodeMerger;
+    }
+
+    public void setNodeMerger(NodeMerger nodeMerger) {
+        this.nodeMerger = nodeMerger;
+    }
+
+    public NodeCreator<T> getNodeCreator() {
+        return nodeCreator;
+    }
+
+    public void setNodeCreator(NodeCreator<T> nodeCreator) {
+        this.nodeCreator = nodeCreator;
     }
 
 }

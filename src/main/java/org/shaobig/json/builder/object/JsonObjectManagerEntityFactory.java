@@ -2,24 +2,22 @@ package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
-import org.shaobig.json.builder.reader.GenericPathReader;
 
 class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
-    private EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory;
-    private EntityFactory<GenericPathReader<String>> stringGenericPathReader;
+    private EntityFactory<MergerNodeCreatorManager> mergerNodeCreatorManagerEntityFactory;
+    private EntityFactory<GenericPathReaderManager> genericPathReaderManagerEntityFactory;
 
-    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory, EntityFactory<GenericPathReader<String>> stringGenericPathReader) {
+    public JsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<MergerNodeCreatorManager> mergerNodeCreatorManagerEntityFactory, EntityFactory<GenericPathReaderManager> genericPathReaderManagerEntityFactory) {
         this.jsonNodeEntityFactory = jsonNodeEntityFactory;
-        this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
-        this.stringGenericPathReader = stringGenericPathReader;
+        this.mergerNodeCreatorManagerEntityFactory = mergerNodeCreatorManagerEntityFactory;
+        this.genericPathReaderManagerEntityFactory = genericPathReaderManagerEntityFactory;
     }
 
     @Override
     public JsonObjectManager createEntity() {
-        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), getObjectNodeCreatorEntityFactory().createEntity(), getStringGenericPathReader().createEntity());
+        return new JsonObjectManager(getJsonNodeEntityFactory().createEntity(), getMergerNodeCreatorManagerEntityFactory().createEntity(), getGenericPathReaderManagerEntityFactory().createEntity());
     }
 
     public EntityFactory<JsonNode> getJsonNodeEntityFactory() {
@@ -30,21 +28,20 @@ class JsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager>
         this.jsonNodeEntityFactory = jsonNodeEntityFactory;
     }
 
-    public EntityFactory<MergerNodeCreator<Object>> getObjectNodeCreatorEntityFactory() {
-        return objectNodeCreatorEntityFactory;
+    public EntityFactory<MergerNodeCreatorManager> getMergerNodeCreatorManagerEntityFactory() {
+        return mergerNodeCreatorManagerEntityFactory;
     }
 
-    public void setObjectNodeCreatorEntityFactory(EntityFactory<MergerNodeCreator<Object>> objectNodeCreatorEntityFactory) {
-        this.objectNodeCreatorEntityFactory = objectNodeCreatorEntityFactory;
+    public void setMergerNodeCreatorManagerEntityFactory(EntityFactory<MergerNodeCreatorManager> mergerNodeCreatorManagerEntityFactory) {
+        this.mergerNodeCreatorManagerEntityFactory = mergerNodeCreatorManagerEntityFactory;
     }
 
-
-    public EntityFactory<GenericPathReader<String>> getStringGenericPathReader() {
-        return stringGenericPathReader;
+    public EntityFactory<GenericPathReaderManager> getGenericPathReaderManagerEntityFactory() {
+        return genericPathReaderManagerEntityFactory;
     }
 
-    public void setStringGenericPathReader(EntityFactory<GenericPathReader<String>> stringGenericPathReader) {
-        this.stringGenericPathReader = stringGenericPathReader;
+    public void setGenericPathReaderManagerEntityFactory(EntityFactory<GenericPathReaderManager> genericPathReaderManagerEntityFactory) {
+        this.genericPathReaderManagerEntityFactory = genericPathReaderManagerEntityFactory;
     }
 
 }

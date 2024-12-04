@@ -1,7 +1,7 @@
 package org.shaobig.json.builder.object;
 
-public interface NodeBuilderInserter {
+public interface NodeBuilderInserter<T> {
 
-    JsonObject.Builder insertNode(String path, Object object);
+    JsonObject.Builder insertNode(String path, T entity);
 
 }

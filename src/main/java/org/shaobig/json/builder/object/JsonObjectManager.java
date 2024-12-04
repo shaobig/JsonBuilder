@@ -1,33 +1,43 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.NodeCreator;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
-import org.shaobig.json.builder.reader.GenericPathReader;
+import org.shaobig.json.builder.reader.IntegerPathReader;
 import org.shaobig.json.builder.reader.StringPathReader;
 
-public class JsonObjectManager implements NodeCreator<Object>, StringPathReader, JsonNodeSetter {
+public class JsonObjectManager implements StringNodeInserter, IntegerNodeInserter, StringPathReader, IntegerPathReader, JsonNodeSetter {
 
     private JsonNode jsonNode;
-    private MergerNodeCreator<Object> objectNodeCreator;
-    private GenericPathReader<String> stringGenericPathReader;
+    private MergerNodeCreatorManager mergerNodeCreatorManager;
+    private GenericPathReaderManager genericPathReaderManager;
 
-    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreator<Object> objectNodeCreator, GenericPathReader<String> stringGenericPathReader) {
+    public JsonObjectManager(JsonNode jsonNode, MergerNodeCreatorManager mergerNodeCreatorManager, GenericPathReaderManager genericPathReaderManager) {
         this.jsonNode = jsonNode;
-        this.objectNodeCreator = objectNodeCreator;
-        this.stringGenericPathReader = stringGenericPathReader;
+        this.mergerNodeCreatorManager = mergerNodeCreatorManager;
+        this.genericPathReaderManager = genericPathReaderManager;
     }
 
     @Override
-    public JsonNode createNode(String path, Object object) {
-        JsonNode jsonNode = getObjectNodeCreator().createNode(path, object);
+    public JsonNode insertString(String path, String string) {
+        JsonNode jsonNode = getMergerNodeCreatorManager().insertString(path, string);
+        setJsonNode(jsonNode);
+        return jsonNode;
+    }
+
+    @Override
+    public JsonNode insertInteger(String path, Integer integer) {
+        JsonNode jsonNode = getMergerNodeCreatorManager().insertInteger(path, integer);
         setJsonNode(jsonNode);
         return jsonNode;
     }
 
     @Override
     public String readString(String path) {
-        return getStringGenericPathReader().readPath(path);
+        return getGenericPathReaderManager().readString(path);
+    }
+
+    @Override
+    public Integer readInteger(String path) {
+        return getGenericPathReaderManager().readInteger(path);
     }
 
     public JsonNode getJsonNode() {
@@ -37,24 +47,24 @@ public class JsonObjectManager implements NodeCreator<Object>, StringPathReader,
     @Override
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
-        getObjectNodeCreator().setJsonNode(jsonNode);
-        getStringGenericPathReader().setJsonNode(jsonNode);
+        getMergerNodeCreatorManager().setJsonNode(jsonNode);
+        getGenericPathReaderManager().setJsonNode(jsonNode);
     }
 
-    public MergerNodeCreator<Object> getObjectNodeCreator() {
-        return objectNodeCreator;
+    public MergerNodeCreatorManager getMergerNodeCreatorManager() {
+        return mergerNodeCreatorManager;
     }
 
-    public void setObjectNodeCreator(MergerNodeCreator<Object> objectNodeCreator) {
-        this.objectNodeCreator = objectNodeCreator;
+    public void setMergerNodeCreatorManager(MergerNodeCreatorManager mergerNodeCreatorManager) {
+        this.mergerNodeCreatorManager = mergerNodeCreatorManager;
     }
 
-    public GenericPathReader<String> getStringGenericPathReader() {
-        return stringGenericPathReader;
+    public GenericPathReaderManager getGenericPathReaderManager() {
+        return genericPathReaderManager;
     }
 
-    public void setStringGenericPathReader(GenericPathReader<String> stringGenericPathReader) {
-        this.stringGenericPathReader = stringGenericPathReader;
+    public void setGenericPathReaderManager(GenericPathReaderManager genericPathReaderManager) {
+        this.genericPathReaderManager = genericPathReaderManager;
     }
 
     @Override

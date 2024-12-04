@@ -19,17 +19,17 @@ public class ValidationJsonNodePathReader implements JsonNodePathReader {
                 .orElseThrow(() -> new JsonValueNotFoundException(String.format("Can't find the JSON value in: '%s'", path)));
     }
 
+    @Override
+    public void setJsonNode(JsonNode jsonNode) {
+        getJsonNodePathReader().setJsonNode(jsonNode);
+    }
+
     public JsonNodePathReader getJsonNodePathReader() {
         return jsonNodePathReader;
     }
 
     public void setJsonNodePathReader(JsonNodePathReader jsonNodePathReader) {
         this.jsonNodePathReader = jsonNodePathReader;
-    }
-
-    @Override
-    public void setJsonNode(JsonNode jsonNode) {
-        getJsonNodePathReader().setJsonNode(jsonNode);
     }
 
 }
