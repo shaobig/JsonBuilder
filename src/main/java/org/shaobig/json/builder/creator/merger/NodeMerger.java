@@ -4,6 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public interface NodeMerger<T extends JsonNode> {
 
-    T mergeValue(JsonNode parentNode, JsonNode childNode);
+    T mergeValue(T parentNode, JsonNode childNode);
 
 }

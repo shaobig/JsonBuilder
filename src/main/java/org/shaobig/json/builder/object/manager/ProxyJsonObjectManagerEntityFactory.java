@@ -31,7 +31,7 @@ public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonOb
     @Override
     public JsonObjectManager createEntity() {
         JsonNode jsonNode = getJsonNodeEntityFactory().createEntity();
-        NodeMerger<JsonNode> jsonNodeNodeMerger = new RecursiveNodeMerger(new CopyNodeMerger(new ObjectNodeSupplier()));
+        NodeMerger<JsonNode> jsonNodeNodeMerger = new RecursiveNodeMerger(new ObjectNodeSupplier(), new CopyNodeMerger());
         MergerNodeCreatorManagerEntityFactory mergerNodeCreatorManagerEntityFactory = new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new StringEntityNodeCreator(new ObjectNodeSupplier())), new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new IntegerEntityNodeCreator(new ObjectNodeSupplier())));
         GenericPathReaderManagerEntityFactory genericPathReaderManagerEntityFactory = new GenericPathReaderManagerEntityFactory(new GenericPathReaderEntityFactory<>(jsonNode, new StringValueReader()), new GenericPathReaderEntityFactory<>(jsonNode, new IntegerValueReader()));
         return new JsonObjectManagerEntityFactory(() -> jsonNode, mergerNodeCreatorManagerEntityFactory, genericPathReaderManagerEntityFactory).createEntity();
