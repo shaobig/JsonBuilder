@@ -1,8 +1,10 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.reader.IntegerPathReader;
-import org.shaobig.json.builder.reader.StringPathReader;
+import org.shaobig.json.builder.object.manager.JsonObjectManager;
+import org.shaobig.json.builder.object.manager.ProxyJsonObjectManagerEntityFactory;
+import org.shaobig.json.builder.reader.path.IntegerPathReader;
+import org.shaobig.json.builder.reader.path.StringPathReader;
 
 public class JsonObject implements StringNodeInserter, IntegerNodeInserter, StringPathReader, IntegerPathReader {
 

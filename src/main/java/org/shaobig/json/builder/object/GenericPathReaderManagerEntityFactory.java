@@ -1,7 +1,7 @@
 package org.shaobig.json.builder.object;
 
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.reader.GenericPathReader;
+import org.shaobig.json.builder.reader.path.GenericPathReader;
 
 public class GenericPathReaderManagerEntityFactory implements EntityFactory<GenericPathReaderManager> {
 

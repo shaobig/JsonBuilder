@@ -1,7 +1,6 @@
-package org.shaobig.json.builder.reader.entity;
+package org.shaobig.json.builder.reader.value;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.reader.ValueReader;
 
 public class IntegerValueReader implements ValueReader<Integer> {
 

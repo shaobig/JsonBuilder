@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.value;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

@@ -1,7 +1,7 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
+import org.shaobig.json.builder.creator.MergerNodeCreator;
 
 public class MergerNodeCreatorManager implements StringNodeInserter, IntegerNodeInserter, JsonNodeSetter {
 

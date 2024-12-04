@@ -1,7 +1,7 @@
 package org.shaobig.json.builder.object;
 
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreator;
+import org.shaobig.json.builder.creator.MergerNodeCreator;
 
 public class MergerNodeCreatorManagerEntityFactory implements EntityFactory<MergerNodeCreatorManager> {
 

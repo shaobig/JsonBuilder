@@ -1,7 +1,8 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.path;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
+import org.shaobig.json.builder.reader.value.ValueReader;
 
 public class GenericPathReaderEntityFactory<T> implements EntityFactory<GenericPathReader<T>> {
 
@@ -15,7 +16,7 @@ public class GenericPathReaderEntityFactory<T> implements EntityFactory<GenericP
 
     @Override
     public GenericPathReader<T> createEntity() {
-        return new GenericPathReader<>(new ValidationJsonNodePathReader(new IterativeJsonNodePathReader(getJsonNode())), getValueReader());
+        return new GenericPathReader<>(new ValidationChangeablePathReader(new IterativeChangeablePathReader(getJsonNode())), getValueReader());
     }
 
     public JsonNode getJsonNode() {

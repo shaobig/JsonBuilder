@@ -1,9 +1,8 @@
-package org.shaobig.json.builder.creator.merger;
+package org.shaobig.json.builder.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.creator.NestedNodeCreator;
-import org.shaobig.json.builder.creator.NodeCreator;
+import org.shaobig.json.builder.creator.merger.NodeMerger;
 
 public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNodeCreator<T>> {
 
@@ -19,7 +18,7 @@ public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNo
 
     @Override
     public MergerNodeCreator<T> createEntity() {
-        return new GenericMergerNodeCreator<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(getNodeCreator()));
+        return new MergerNodeCreator<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(getNodeCreator()));
     }
 
     public JsonNode getJsonNode() {

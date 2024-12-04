@@ -1,14 +1,14 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.path;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.object.JsonNodeSetter;
+import org.shaobig.json.builder.reader.value.ValueReader;
 
-public class GenericPathReader<T> implements PathReader<T>, JsonNodeSetter {
+public class GenericPathReader<T> implements ChangeablePathReader<T> {
 
-    private JsonNodePathReader jsonNodePathReader;
+    private ChangeablePathReader<JsonNode> jsonNodePathReader;
     private ValueReader<T> valueReader;
 
-    public GenericPathReader(JsonNodePathReader jsonNodePathReader, ValueReader<T> valueReader) {
+    public GenericPathReader(ChangeablePathReader<JsonNode> jsonNodePathReader, ValueReader<T> valueReader) {
         this.jsonNodePathReader = jsonNodePathReader;
         this.valueReader = valueReader;
     }
@@ -23,11 +23,11 @@ public class GenericPathReader<T> implements PathReader<T>, JsonNodeSetter {
         getJsonNodePathReader().setJsonNode(jsonNode);
     }
 
-    public JsonNodePathReader getJsonNodePathReader() {
+    public ChangeablePathReader<JsonNode> getJsonNodePathReader() {
         return jsonNodePathReader;
     }
 
-    public void setJsonNodePathReader(JsonNodePathReader jsonNodePathReader) {
+    public void setJsonNodePathReader(ChangeablePathReader<JsonNode> jsonNodePathReader) {
         this.jsonNodePathReader = jsonNodePathReader;
     }
 

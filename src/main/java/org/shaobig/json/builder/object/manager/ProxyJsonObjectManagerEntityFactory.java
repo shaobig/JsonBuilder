@@ -1,16 +1,19 @@
-package org.shaobig.json.builder.object;
+package org.shaobig.json.builder.object.manager;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.creator.entity.IntegerNodeCreator;
 import org.shaobig.json.builder.creator.entity.StringNodeCreator;
-import org.shaobig.json.builder.creator.merger.MergerNodeCreatorEntityFactory;
+import org.shaobig.json.builder.creator.MergerNodeCreatorEntityFactory;
 import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
-import org.shaobig.json.builder.reader.GenericPathReaderEntityFactory;
-import org.shaobig.json.builder.reader.entity.IntegerValueReader;
-import org.shaobig.json.builder.reader.entity.StringValueReader;
+import org.shaobig.json.builder.object.GenericPathReaderManagerEntityFactory;
+import org.shaobig.json.builder.object.JsonNodeEntityFactory;
+import org.shaobig.json.builder.object.MergerNodeCreatorManagerEntityFactory;
+import org.shaobig.json.builder.reader.path.GenericPathReaderEntityFactory;
+import org.shaobig.json.builder.reader.value.IntegerValueReader;
+import org.shaobig.json.builder.reader.value.StringValueReader;
 
-class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
+public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
 

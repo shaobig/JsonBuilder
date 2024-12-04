@@ -1,16 +1,16 @@
-package org.shaobig.json.builder.reader;
+package org.shaobig.json.builder.reader.path;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Arrays;
 
-public class IterativeJsonNodePathReader implements JsonNodePathReader {
+public class IterativeChangeablePathReader implements ChangeablePathReader<JsonNode> {
 
     private static final String DELIMITER_REG_EXP = "\\.";
 
     private JsonNode jsonNode;
 
-    public IterativeJsonNodePathReader(JsonNode jsonNode) {
+    public IterativeChangeablePathReader(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
     }
 

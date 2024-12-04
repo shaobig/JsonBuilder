@@ -1,7 +1,7 @@
-package org.shaobig.json.builder.creator.merger;
+package org.shaobig.json.builder.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.NodeCreator;
+import org.shaobig.json.builder.creator.merger.NodeMerger;
 
 public class MergerNodeCreator<T> implements NodeCreator<T> {
 
