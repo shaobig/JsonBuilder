@@ -16,8 +16,8 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, String
     }
 
     @Override
-    public JsonNode insertString(String path, String string) {
-        return getJsonObjectManager().insertString(path, string);
+    public JsonNode createString(String path, String string) {
+        return getJsonObjectManager().createString(path, string);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, String
 
         @Override
         public Builder createString(String path, String string) {
-            getJsonBuilderManager().insertString(path, string);
+            getJsonBuilderManager().createString(path, string);
             return this;
         }
 

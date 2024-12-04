@@ -22,7 +22,7 @@ public class MergerNodeCreatorManager implements StringNodeCreator, IntegerNodeC
     }
 
     @Override
-    public JsonNode insertString(String path, String string) {
+    public JsonNode createString(String path, String string) {
         JsonNode jsonNode = getStringMergerNodeCreator().createNode(path, string);
         setJsonNode(jsonNode);
         return jsonNode;

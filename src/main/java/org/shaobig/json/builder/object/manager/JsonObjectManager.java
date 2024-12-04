@@ -22,8 +22,8 @@ public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator,
     }
 
     @Override
-    public JsonNode insertString(String path, String string) {
-        JsonNode jsonNode = getMergerNodeCreatorManager().insertString(path, string);
+    public JsonNode createString(String path, String string) {
+        JsonNode jsonNode = getMergerNodeCreatorManager().createString(path, string);
         setJsonNode(jsonNode);
         return jsonNode;
     }
