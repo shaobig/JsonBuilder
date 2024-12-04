@@ -6,6 +6,8 @@ import org.shaobig.json.builder.creator.MergerNodeCreatorEntityFactory;
 import org.shaobig.json.builder.creator.ObjectNodeSupplier;
 import org.shaobig.json.builder.creator.entity.IntegerEntityNodeCreator;
 import org.shaobig.json.builder.creator.entity.StringEntityNodeCreator;
+import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
+import org.shaobig.json.builder.creator.merger.NodeMerger;
 import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
 import org.shaobig.json.builder.object.JsonNodeEntityFactory;
 import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManagerEntityFactory;
@@ -28,8 +30,9 @@ public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonOb
 
     @Override
     public JsonObjectManager createEntity() {
-        JsonNode jsonNode = getJsonNodeEntityFactory().createEntity();;
-        MergerNodeCreatorManagerEntityFactory mergerNodeCreatorManagerEntityFactory = new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(jsonNode, new RecursiveNodeMerger(), new StringEntityNodeCreator(new ObjectNodeSupplier())), new MergerNodeCreatorEntityFactory<>(jsonNode, new RecursiveNodeMerger(), new IntegerEntityNodeCreator(new ObjectNodeSupplier())));
+        JsonNode jsonNode = getJsonNodeEntityFactory().createEntity();
+        NodeMerger<JsonNode> jsonNodeNodeMerger = new RecursiveNodeMerger(new CopyNodeMerger(new ObjectNodeSupplier()));
+        MergerNodeCreatorManagerEntityFactory mergerNodeCreatorManagerEntityFactory = new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new StringEntityNodeCreator(new ObjectNodeSupplier())), new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new IntegerEntityNodeCreator(new ObjectNodeSupplier())));
         GenericPathReaderManagerEntityFactory genericPathReaderManagerEntityFactory = new GenericPathReaderManagerEntityFactory(new GenericPathReaderEntityFactory<>(jsonNode, new StringValueReader()), new GenericPathReaderEntityFactory<>(jsonNode, new IntegerValueReader()));
         return new JsonObjectManagerEntityFactory(() -> jsonNode, mergerNodeCreatorManagerEntityFactory, genericPathReaderManagerEntityFactory).createEntity();
     }
