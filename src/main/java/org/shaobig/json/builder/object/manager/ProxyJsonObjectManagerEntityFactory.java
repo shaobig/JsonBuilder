@@ -9,6 +9,7 @@ import org.shaobig.json.builder.creator.entity.StringEntityNodeCreator;
 import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
 import org.shaobig.json.builder.creator.merger.NodeMerger;
 import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
+import org.shaobig.json.builder.creator.merger.stream.UnknownSizeSpliteratorSupplier;
 import org.shaobig.json.builder.object.JsonNodeEntityFactory;
 import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManagerEntityFactory;
 import org.shaobig.json.builder.object.manager.reader.GenericPathReaderManagerEntityFactory;
@@ -31,7 +32,7 @@ public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonOb
     @Override
     public JsonObjectManager createEntity() {
         JsonNode jsonNode = getJsonNodeEntityFactory().createEntity();
-        NodeMerger<JsonNode> jsonNodeNodeMerger = new RecursiveNodeMerger(new ObjectNodeSupplier(), new CopyNodeMerger());
+        NodeMerger<JsonNode> jsonNodeNodeMerger = new RecursiveNodeMerger(new ObjectNodeSupplier(), new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>()));
         MergerNodeCreatorManagerEntityFactory mergerNodeCreatorManagerEntityFactory = new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new StringEntityNodeCreator(new ObjectNodeSupplier())), new MergerNodeCreatorEntityFactory<>(jsonNode, jsonNodeNodeMerger, new IntegerEntityNodeCreator(new ObjectNodeSupplier())));
         GenericPathReaderManagerEntityFactory genericPathReaderManagerEntityFactory = new GenericPathReaderManagerEntityFactory(new GenericPathReaderEntityFactory<>(jsonNode, new StringValueReader()), new GenericPathReaderEntityFactory<>(jsonNode, new IntegerValueReader()));
         return new JsonObjectManagerEntityFactory(() -> jsonNode, mergerNodeCreatorManagerEntityFactory, genericPathReaderManagerEntityFactory).createEntity();
