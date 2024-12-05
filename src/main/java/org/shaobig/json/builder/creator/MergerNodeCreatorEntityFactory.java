@@ -7,10 +7,10 @@ import org.shaobig.json.builder.creator.merger.NodeMerger;
 public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNodeCreator<T>> {
 
     private JsonNode jsonNode;
-    private NodeMerger nodeMerger;
+    private NodeMerger<JsonNode> nodeMerger;
     private NodeCreator<T> nodeCreator;
 
-    public MergerNodeCreatorEntityFactory(JsonNode jsonNode, NodeMerger nodeMerger, NodeCreator<T> nodeCreator) {
+    public MergerNodeCreatorEntityFactory(JsonNode jsonNode, NodeMerger<JsonNode> nodeMerger, NodeCreator<T> nodeCreator) {
         this.jsonNode = jsonNode;
         this.nodeMerger = nodeMerger;
         this.nodeCreator = nodeCreator;
@@ -29,11 +29,11 @@ public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNo
         this.jsonNode = jsonNode;
     }
 
-    public NodeMerger getNodeMerger() {
+    public NodeMerger<JsonNode> getNodeMerger() {
         return nodeMerger;
     }
 
-    public void setNodeMerger(NodeMerger nodeMerger) {
+    public void setNodeMerger(NodeMerger<JsonNode> nodeMerger) {
         this.nodeMerger = nodeMerger;
     }
 

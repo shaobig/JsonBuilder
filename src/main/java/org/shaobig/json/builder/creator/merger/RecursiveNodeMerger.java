@@ -16,7 +16,7 @@ public class RecursiveNodeMerger implements NodeMerger<JsonNode> {
     }
 
     @Override
-    public JsonNode mergeValue(JsonNode parentNode, JsonNode childNode) {;
+    public JsonNode mergeValue(JsonNode parentNode, JsonNode childNode) {
         ObjectNode mergedNode = getObjectNodeNodeMerger().mergeValue(getObjectNodeSupplier().get(), parentNode);
         childNode.fields().forEachRemaining(childNodeEntry -> {
             String childKey = childNodeEntry.getKey();
