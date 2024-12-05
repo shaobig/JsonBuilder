@@ -2,40 +2,30 @@ package org.shaobig.json.builder.object.manager;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.EntityFactory;
-import org.shaobig.json.builder.creator.MergerNodeCreatorEntityFactory;
-import org.shaobig.json.builder.creator.ObjectNodeSupplier;
-import org.shaobig.json.builder.creator.entity.IntegerEntityNodeCreator;
-import org.shaobig.json.builder.creator.entity.StringEntityNodeCreator;
-import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
 import org.shaobig.json.builder.creator.merger.NodeMerger;
-import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
-import org.shaobig.json.builder.creator.merger.stream.UnknownSizeSpliteratorSupplier;
 import org.shaobig.json.builder.object.JsonNodeEntityFactory;
-import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManagerEntityFactory;
-import org.shaobig.json.builder.object.manager.reader.GenericPathReaderManagerEntityFactory;
-import org.shaobig.json.builder.reader.path.GenericPathReaderEntityFactory;
-import org.shaobig.json.builder.reader.value.IntegerValueReader;
-import org.shaobig.json.builder.reader.value.StringValueReader;
+import org.shaobig.json.builder.object.manager.creator.ProxyMergerNodeCreatorManagerEntityFactory;
+import org.shaobig.json.builder.object.manager.creator.merger.JsonNodeMergerEntityFactory;
+import org.shaobig.json.builder.object.manager.reader.ProxyGenericPathReaderManagerEntityFactory;
 
 public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonObjectManager> {
 
     private EntityFactory<JsonNode> jsonNodeEntityFactory;
+    private EntityFactory<NodeMerger<JsonNode>> nodeMergerEntityFactory;
 
-    public ProxyJsonObjectManagerEntityFactory() {
-        this.jsonNodeEntityFactory = new JsonNodeEntityFactory();
+    private ProxyJsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory, EntityFactory<NodeMerger<JsonNode>> nodeMergerEntityFactory) {
+        this.jsonNodeEntityFactory = jsonNodeEntityFactory;
+        this.nodeMergerEntityFactory = nodeMergerEntityFactory;
     }
 
-    public ProxyJsonObjectManagerEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory) {
-        this.jsonNodeEntityFactory = jsonNodeEntityFactory;
+    public ProxyJsonObjectManagerEntityFactory() {
+        this(new JsonNodeEntityFactory(), new JsonNodeMergerEntityFactory());
     }
 
     @Override
     public JsonObjectManager createEntity() {
         JsonNode jsonNode = getJsonNodeEntityFactory().createEntity();
-        NodeMerger<JsonNode> nodeMerger = new RecursiveNodeMerger(new ObjectNodeSupplier(), new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>()));
-        MergerNodeCreatorManagerEntityFactory mergerNodeCreatorManagerEntityFactory = new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(jsonNode, nodeMerger, new StringEntityNodeCreator(new ObjectNodeSupplier())), new MergerNodeCreatorEntityFactory<>(jsonNode, nodeMerger, new IntegerEntityNodeCreator(new ObjectNodeSupplier())));
-        GenericPathReaderManagerEntityFactory genericPathReaderManagerEntityFactory = new GenericPathReaderManagerEntityFactory(new GenericPathReaderEntityFactory<>(jsonNode, new StringValueReader()), new GenericPathReaderEntityFactory<>(jsonNode, new IntegerValueReader()));
-        return new JsonObjectManagerEntityFactory(() -> jsonNode, mergerNodeCreatorManagerEntityFactory, genericPathReaderManagerEntityFactory).createEntity();
+        return new JsonObjectManagerEntityFactory(() -> jsonNode, new ProxyMergerNodeCreatorManagerEntityFactory(jsonNode, getNodeMergerEntityFactory().createEntity()), new ProxyGenericPathReaderManagerEntityFactory(jsonNode)).createEntity();
     }
 
     public EntityFactory<JsonNode> getJsonNodeEntityFactory() {
@@ -44,6 +34,14 @@ public class ProxyJsonObjectManagerEntityFactory implements EntityFactory<JsonOb
 
     public void setJsonNodeEntityFactory(EntityFactory<JsonNode> jsonNodeEntityFactory) {
         this.jsonNodeEntityFactory = jsonNodeEntityFactory;
+    }
+
+    public EntityFactory<NodeMerger<JsonNode>> getNodeMergerEntityFactory() {
+        return nodeMergerEntityFactory;
+    }
+
+    public void setNodeMergerEntityFactory(EntityFactory<NodeMerger<JsonNode>> nodeMergerEntityFactory) {
+        this.nodeMergerEntityFactory = nodeMergerEntityFactory;
     }
 
 }

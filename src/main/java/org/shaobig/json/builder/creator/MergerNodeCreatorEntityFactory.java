@@ -18,7 +18,7 @@ public class MergerNodeCreatorEntityFactory<T> implements EntityFactory<MergerNo
 
     @Override
     public MergerNodeCreator<T> createEntity() {
-        return new MergerNodeCreator<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(getNodeCreator()));
+        return new MergerNodeCreator<>(getJsonNode(), getNodeMerger(), getNodeCreator());
     }
 
     public JsonNode getJsonNode() {

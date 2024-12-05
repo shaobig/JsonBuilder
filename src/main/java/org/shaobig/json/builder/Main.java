@@ -10,6 +10,7 @@ public class Main {
                 .createString("a.b.d", "ABD")
                 .createInteger("a.b.e", 11)
                 .createJsonObject();
+        System.out.println(jsonObject);
     }
 
 }
