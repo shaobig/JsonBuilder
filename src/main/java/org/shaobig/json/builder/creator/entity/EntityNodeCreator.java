@@ -1,23 +1,23 @@
 package org.shaobig.json.builder.creator.entity;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.NodeCreator;
 import org.shaobig.json.builder.creator.NodeSupplier;
 
-public abstract class EntityNodeCreator<T> implements NodeCreator<T> {
+public abstract class EntityNodeCreator<T, N extends JsonNode> implements NodeCreator<T> {
 
-    private NodeSupplier<ObjectNode> objectNodeSupplier;
+    private NodeSupplier<N> nodeSupplier;
 
-    public EntityNodeCreator(NodeSupplier<ObjectNode> objectNodeSupplier) {
-        this.objectNodeSupplier = objectNodeSupplier;
+    public EntityNodeCreator(NodeSupplier<N> nodeSupplier) {
+        this.nodeSupplier = nodeSupplier;
     }
 
-    public NodeSupplier<ObjectNode> getObjectNodeSupplier() {
-        return objectNodeSupplier;
+    public NodeSupplier<N> getNodeSupplier() {
+        return nodeSupplier;
     }
 
-    public void setObjectNodeSupplier(NodeSupplier<ObjectNode> objectNodeSupplier) {
-        this.objectNodeSupplier = objectNodeSupplier;
+    public void setNodeSupplier(NodeSupplier<N> nodeSupplier) {
+        this.nodeSupplier = nodeSupplier;
     }
 
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.shaobig.json.builder.creator.NodeSupplier;
 
-public class IntegerEntityNodeCreator extends EntityNodeCreator<Integer> {
+public class IntegerEntityNodeCreator extends EntityNodeCreator<Integer, ObjectNode> {
 
     public IntegerEntityNodeCreator(NodeSupplier<ObjectNode> objectNodeSupplier) {
         super(objectNodeSupplier);
@@ -12,7 +12,7 @@ public class IntegerEntityNodeCreator extends EntityNodeCreator<Integer> {
 
     @Override
     public JsonNode createNode(String path, Integer integer) {
-        return getObjectNodeSupplier().supplyNode().put(path, integer);
+        return getNodeSupplier().supplyNode().put(path, integer);
     }
 
 }
