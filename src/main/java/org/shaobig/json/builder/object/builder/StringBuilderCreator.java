@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.object.manager.creator;
+package org.shaobig.json.builder.object.builder;
 
 import org.shaobig.json.builder.object.JsonObject;
 

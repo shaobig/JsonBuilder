@@ -3,13 +3,16 @@ package org.shaobig.json.builder.object.manager;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.object.JsonNodeSetter;
 import org.shaobig.json.builder.object.manager.creator.IntegerNodeCreator;
+import org.shaobig.json.builder.object.manager.creator.ListNodeCreator;
 import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManager;
 import org.shaobig.json.builder.object.manager.creator.StringNodeCreator;
 import org.shaobig.json.builder.object.manager.reader.GenericPathReaderManager;
 import org.shaobig.json.builder.reader.path.IntegerPathReader;
 import org.shaobig.json.builder.reader.path.StringPathReader;
 
-public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator, StringPathReader, IntegerPathReader, JsonNodeSetter {
+import java.util.List;
+
+public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, IntegerPathReader, JsonNodeSetter {
 
     private JsonNode jsonNode;
     private MergerNodeCreatorManager mergerNodeCreatorManager;
@@ -31,6 +34,13 @@ public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator,
     @Override
     public JsonNode createInteger(String path, Integer integer) {
         JsonNode jsonNode = getMergerNodeCreatorManager().createInteger(path, integer);
+        setJsonNode(jsonNode);
+        return jsonNode;
+    }
+
+    @Override
+    public JsonNode createList(String path, List<?> list) {
+        JsonNode jsonNode = getMergerNodeCreatorManager().createList(path, list);
         setJsonNode(jsonNode);
         return jsonNode;
     }
