@@ -2,22 +2,21 @@ package org.shaobig.json.builder.creator.merger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import java.util.function.Supplier;
+import org.shaobig.json.builder.creator.NodeSupplier;
 
 public class RecursiveNodeMerger implements NodeMerger<JsonNode> {
 
-    private Supplier<ObjectNode> objectNodeSupplier;
+    private NodeSupplier<ObjectNode> objectNodeSupplier;
     private NodeMerger<ObjectNode> objectNodeNodeMerger;
 
-    public RecursiveNodeMerger(Supplier<ObjectNode> objectNodeSupplier, NodeMerger<ObjectNode> objectNodeNodeMerger) {
+    public RecursiveNodeMerger(NodeSupplier<ObjectNode> objectNodeSupplier, NodeMerger<ObjectNode> objectNodeNodeMerger) {
         this.objectNodeSupplier = objectNodeSupplier;
         this.objectNodeNodeMerger = objectNodeNodeMerger;
     }
 
     @Override
     public JsonNode mergeValue(JsonNode parentNode, JsonNode childNode) {
-        ObjectNode mergedNode = getObjectNodeNodeMerger().mergeValue(getObjectNodeSupplier().get(), parentNode);
+        ObjectNode mergedNode = getObjectNodeNodeMerger().mergeValue(getObjectNodeSupplier().supplyNode(), parentNode);
         childNode.fields().forEachRemaining(childNodeEntry -> {
             String childKey = childNodeEntry.getKey();
             JsonNode childValue = childNodeEntry.getValue();
@@ -35,11 +34,11 @@ public class RecursiveNodeMerger implements NodeMerger<JsonNode> {
         return mergedNode;
     }
 
-    public Supplier<ObjectNode> getObjectNodeSupplier() {
+    public NodeSupplier<ObjectNode> getObjectNodeSupplier() {
         return objectNodeSupplier;
     }
 
-    public void setObjectNodeSupplier(Supplier<ObjectNode> objectNodeSupplier) {
+    public void setObjectNodeSupplier(NodeSupplier<ObjectNode> objectNodeSupplier) {
         this.objectNodeSupplier = objectNodeSupplier;
     }
 

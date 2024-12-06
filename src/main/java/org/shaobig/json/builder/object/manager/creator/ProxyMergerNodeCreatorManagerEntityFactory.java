@@ -5,12 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.creator.MergerNodeCreatorEntityFactory;
 import org.shaobig.json.builder.creator.NestedNodeCreator;
+import org.shaobig.json.builder.creator.NodeSupplier;
 import org.shaobig.json.builder.creator.ObjectNodeSupplier;
 import org.shaobig.json.builder.creator.entity.IntegerEntityNodeCreator;
 import org.shaobig.json.builder.creator.entity.StringEntityNodeCreator;
 import org.shaobig.json.builder.creator.merger.NodeMerger;
-
-import java.util.function.Supplier;
 
 public class ProxyMergerNodeCreatorManagerEntityFactory implements EntityFactory<MergerNodeCreatorManager> {
 
@@ -24,7 +23,7 @@ public class ProxyMergerNodeCreatorManagerEntityFactory implements EntityFactory
 
     @Override
     public MergerNodeCreatorManager createEntity() {
-        Supplier<ObjectNode> objectNodeSupplier = new ObjectNodeSupplier();
+        NodeSupplier<ObjectNode> objectNodeSupplier = new ObjectNodeSupplier();
         return new MergerNodeCreatorManagerEntityFactory(new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new StringEntityNodeCreator(objectNodeSupplier))), new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new IntegerEntityNodeCreator(objectNodeSupplier)))).createEntity();
     }
 
