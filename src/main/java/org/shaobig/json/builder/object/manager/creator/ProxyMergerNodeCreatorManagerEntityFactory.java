@@ -9,6 +9,7 @@ import org.shaobig.json.builder.creator.NodeSupplier;
 import org.shaobig.json.builder.creator.ObjectNodeSupplier;
 import org.shaobig.json.builder.creator.entity.IntegerEntityNodeCreator;
 import org.shaobig.json.builder.creator.entity.StringEntityNodeCreator;
+import org.shaobig.json.builder.creator.entity.list.ArrayNodeCreator;
 import org.shaobig.json.builder.creator.entity.list.ArrayNodeSupplier;
 import org.shaobig.json.builder.creator.entity.list.ListEntityNodeCreator;
 import org.shaobig.json.builder.creator.merger.NodeMerger;
@@ -27,9 +28,9 @@ public class ProxyMergerNodeCreatorManagerEntityFactory implements EntityFactory
     public MergerNodeCreatorManager createEntity() {
         NodeSupplier<ObjectNode> objectNodeSupplier = new ObjectNodeSupplier();
         return new MergerNodeCreatorManagerEntityFactory(
-                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new StringEntityNodeCreator(objectNodeSupplier))),
-                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new IntegerEntityNodeCreator(objectNodeSupplier))),
-                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new ListEntityNodeCreator(new ArrayNodeSupplier(), objectNodeSupplier)))
+                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new StringEntityNodeCreator(objectNodeSupplier), objectNodeSupplier)),
+                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new IntegerEntityNodeCreator(objectNodeSupplier), objectNodeSupplier)),
+                new MergerNodeCreatorEntityFactory<>(getJsonNode(), getNodeMerger(), new NestedNodeCreator<>(new ListEntityNodeCreator(objectNodeSupplier, new ArrayNodeCreator(new ArrayNodeSupplier())), objectNodeSupplier))
         ).createEntity();
     }
 

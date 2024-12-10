@@ -1,33 +1,33 @@
 package org.shaobig.json.builder.creator.entity.list;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.shaobig.json.builder.creator.NodeCreator;
 import org.shaobig.json.builder.creator.NodeSupplier;
 import org.shaobig.json.builder.creator.entity.EntityNodeCreator;
 
 import java.util.List;
 
-public class ListEntityNodeCreator extends EntityNodeCreator<List<?>, ArrayNode> {
+public class ListEntityNodeCreator extends EntityNodeCreator<List<?>, ObjectNode> {
 
-    private NodeSupplier<ObjectNode> objectNodeSupplier;
+    private NodeCreator<List<?>> listNodeCreator;
 
-    public ListEntityNodeCreator(NodeSupplier<ArrayNode> nodeSupplier, NodeSupplier<ObjectNode> objectNodeSupplier) {
+    public ListEntityNodeCreator(NodeSupplier<ObjectNode> nodeSupplier, NodeCreator<List<?>> listNodeCreator) {
         super(nodeSupplier);
-        this.objectNodeSupplier = objectNodeSupplier;
+        this.listNodeCreator = listNodeCreator;
     }
 
     @Override
     public JsonNode createNode(String path, List<?> list) {
-        return getObjectNodeSupplier().supplyNode().set(path, list.stream().reduce(getNodeSupplier().supplyNode(), ArrayNode::addPOJO, (jsonNodes, jsonNodes2) -> jsonNodes));
+        return getNodeSupplier().supplyNode().set(path, getListNodeCreator().createNode(path, list));
     }
 
-    public NodeSupplier<ObjectNode> getObjectNodeSupplier() {
-        return objectNodeSupplier;
+    public NodeCreator<List<?>> getListNodeCreator() {
+        return listNodeCreator;
     }
 
-    public void setObjectNodeSupplier(NodeSupplier<ObjectNode> objectNodeSupplier) {
-        this.objectNodeSupplier = objectNodeSupplier;
+    public void setListNodeCreator(NodeCreator<List<?>> listNodeCreator) {
+        this.listNodeCreator = listNodeCreator;
     }
 
 }

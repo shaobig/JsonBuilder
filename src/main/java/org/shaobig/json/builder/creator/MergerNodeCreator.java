@@ -7,17 +7,17 @@ public class MergerNodeCreator<T> implements NodeCreator<T> {
 
     private JsonNode jsonNode;
     private NodeMerger<JsonNode> nodeMerger;
-    private NodeCreator<T> nestedNodeCreator;
+    private NodeCreator<T> nodeCreator;
 
-    public MergerNodeCreator(JsonNode jsonNode, NodeMerger<JsonNode> nodeMerger, NodeCreator<T> nestedNodeCreator) {
+    public MergerNodeCreator(JsonNode jsonNode, NodeMerger<JsonNode> nodeMerger, NodeCreator<T> nodeCreator) {
         this.jsonNode = jsonNode;
         this.nodeMerger = nodeMerger;
-        this.nestedNodeCreator = nestedNodeCreator;
+        this.nodeCreator = nodeCreator;
     }
 
     @Override
     public JsonNode createNode(String path, T object) {
-        return getNodeMerger().mergeValue(getJsonNode(), getNestedNodeCreator().createNode(path, object));
+        return getNodeMerger().mergeValue(getJsonNode(), getNodeCreator().createNode(path, object));
     }
 
     public JsonNode getJsonNode() {
@@ -36,12 +36,12 @@ public class MergerNodeCreator<T> implements NodeCreator<T> {
         this.nodeMerger = nodeMerger;
     }
 
-    public NodeCreator<T> getNestedNodeCreator() {
-        return nestedNodeCreator;
+    public NodeCreator<T> getNodeCreator() {
+        return nodeCreator;
     }
 
-    public void setNestedNodeCreator(NodeCreator<T> nestedNodeCreator) {
-        this.nestedNodeCreator = nestedNodeCreator;
+    public void setNodeCreator(NodeCreator<T> nodeCreator) {
+        this.nodeCreator = nodeCreator;
     }
 
 }

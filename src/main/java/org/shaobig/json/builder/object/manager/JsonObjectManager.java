@@ -7,12 +7,13 @@ import org.shaobig.json.builder.object.manager.creator.ListNodeCreator;
 import org.shaobig.json.builder.object.manager.creator.MergerNodeCreatorManager;
 import org.shaobig.json.builder.object.manager.creator.StringNodeCreator;
 import org.shaobig.json.builder.object.manager.reader.GenericPathReaderManager;
-import org.shaobig.json.builder.reader.path.IntegerPathReader;
-import org.shaobig.json.builder.reader.path.StringPathReader;
+import org.shaobig.json.builder.reader.path.entity.IntegerPathReader;
+import org.shaobig.json.builder.reader.path.entity.ListPathReader;
+import org.shaobig.json.builder.reader.path.entity.StringPathReader;
 
 import java.util.List;
 
-public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, IntegerPathReader, JsonNodeSetter {
+public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, ListPathReader, IntegerPathReader, JsonNodeSetter {
 
     private JsonNode jsonNode;
     private MergerNodeCreatorManager mergerNodeCreatorManager;
@@ -53,6 +54,11 @@ public class JsonObjectManager implements StringNodeCreator, IntegerNodeCreator,
     @Override
     public Integer readInteger(String path) {
         return getGenericPathReaderManager().readInteger(path);
+    }
+
+    @Override
+    public <T> List<T> readList(String path, Class<T> classType) {
+        return getGenericPathReaderManager().readList(path, classType);
     }
 
     public JsonNode getJsonNode() {

@@ -2,18 +2,24 @@ package org.shaobig.json.builder.object.manager.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.object.JsonNodeSetter;
+import org.shaobig.json.builder.reader.path.ChangeableListPathReader;
 import org.shaobig.json.builder.reader.path.GenericPathReader;
-import org.shaobig.json.builder.reader.path.IntegerPathReader;
-import org.shaobig.json.builder.reader.path.StringPathReader;
+import org.shaobig.json.builder.reader.path.entity.IntegerPathReader;
+import org.shaobig.json.builder.reader.path.entity.ListPathReader;
+import org.shaobig.json.builder.reader.path.entity.StringPathReader;
 
-public class GenericPathReaderManager implements StringPathReader, IntegerPathReader, JsonNodeSetter {
+import java.util.List;
+
+public class GenericPathReaderManager implements StringPathReader, IntegerPathReader, ListPathReader, JsonNodeSetter {
 
     private GenericPathReader<String> stringGenericPathReader;
     private GenericPathReader<Integer> integerGenericPathReader;
+    private ChangeableListPathReader changeableListPathReader;
 
-    public GenericPathReaderManager(GenericPathReader<String> stringGenericPathReader, GenericPathReader<Integer> integerGenericPathReader) {
+    public GenericPathReaderManager(GenericPathReader<String> stringGenericPathReader, GenericPathReader<Integer> integerGenericPathReader, ChangeableListPathReader changeableListPathReader) {
         this.stringGenericPathReader = stringGenericPathReader;
         this.integerGenericPathReader = integerGenericPathReader;
+        this.changeableListPathReader = changeableListPathReader;
     }
 
     @Override
@@ -27,9 +33,15 @@ public class GenericPathReaderManager implements StringPathReader, IntegerPathRe
     }
 
     @Override
+    public <T> List<T> readList(String path, Class<T> classType) {
+        return getChangeableListPathReader().readList(path, classType);
+    }
+
+    @Override
     public void setJsonNode(JsonNode jsonNode) {
         getStringGenericPathReader().setJsonNode(jsonNode);
         getIntegerGenericPathReader().setJsonNode(jsonNode);
+        getChangeableListPathReader().setJsonNode(jsonNode);
     }
 
     public GenericPathReader<String> getStringGenericPathReader() {
@@ -46,6 +58,14 @@ public class GenericPathReaderManager implements StringPathReader, IntegerPathRe
 
     public void setIntegerGenericPathReader(GenericPathReader<Integer> integerGenericPathReader) {
         this.integerGenericPathReader = integerGenericPathReader;
+    }
+
+    public ChangeableListPathReader getChangeableListPathReader() {
+        return changeableListPathReader;
+    }
+
+    public void setChangeableListPathReader(ChangeableListPathReader changeableListPathReader) {
+        this.changeableListPathReader = changeableListPathReader;
     }
 
 }

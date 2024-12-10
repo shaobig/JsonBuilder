@@ -11,9 +11,9 @@ public class Main {
                 .createString("a.b.c", "ABC")
                 .createString("a.b.d", "ABD")
                 .createInteger("a.b.e", 123)
-                .createList("a.b.f", List.of("A", "B", "F"))
+                .createList("a.b.f", List.of(true, false, true))
                 .createJsonObject();
-        System.out.println(jsonObject);
+        System.out.println(jsonObject.readList("a.b.f", Boolean.class));
     }
 
 }

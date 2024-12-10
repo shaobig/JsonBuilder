@@ -10,12 +10,13 @@ import org.shaobig.json.builder.object.manager.ProxyJsonObjectManagerEntityFacto
 import org.shaobig.json.builder.object.manager.creator.IntegerNodeCreator;
 import org.shaobig.json.builder.object.manager.creator.ListNodeCreator;
 import org.shaobig.json.builder.object.manager.creator.StringNodeCreator;
-import org.shaobig.json.builder.reader.path.IntegerPathReader;
-import org.shaobig.json.builder.reader.path.StringPathReader;
+import org.shaobig.json.builder.reader.path.entity.IntegerPathReader;
+import org.shaobig.json.builder.reader.path.entity.ListPathReader;
+import org.shaobig.json.builder.reader.path.entity.StringPathReader;
 
 import java.util.List;
 
-public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, IntegerPathReader {
+public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, IntegerPathReader, ListPathReader {
 
     private JsonObjectManager jsonObjectManager;
 
@@ -46,6 +47,11 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNo
     @Override
     public Integer readInteger(String path) {
         return getJsonObjectManager().readInteger(path);
+    }
+
+    @Override
+    public <T> List<T> readList(String path, Class<T> classType) {
+        return getJsonObjectManager().readList(path, classType);
     }
 
     public JsonObjectManager getJsonObjectManager() {

@@ -1,4 +1,4 @@
-package org.shaobig.json.builder.reader.path;
+package org.shaobig.json.builder.reader.path.entity;
 
 public interface IntegerPathReader {
 
