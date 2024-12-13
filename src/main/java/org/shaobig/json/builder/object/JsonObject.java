@@ -1,23 +1,16 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.*;
-import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
-import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
-import org.shaobig.json.builder.creator.merger.stream.UnknownSizeSpliteratorSupplier;
+import org.shaobig.json.builder.creator.JsonNodeCreator;
+import org.shaobig.json.builder.creator.JsonNodeCreatorEntityFactory;
+import org.shaobig.json.builder.creator.NewObjectNodeSupplier;
+import org.shaobig.json.builder.creator.NodeCreator;
 import org.shaobig.json.builder.object.builder.EntityBuilderCreator;
 import org.shaobig.json.builder.object.builder.JsonObjectBuilderCreator;
 import org.shaobig.json.builder.object.manager.JsonObjectManager;
 import org.shaobig.json.builder.object.manager.NodeCreatorManager;
 import org.shaobig.json.builder.object.manager.ValueReaderManager;
-import org.shaobig.json.builder.reader.path.JsonPathReader;
-import org.shaobig.json.builder.reader.path.NestedJsonPathReader;
-import org.shaobig.json.builder.reader.value.EntityListValueReader;
-import org.shaobig.json.builder.reader.value.EntityValueReader;
-import org.shaobig.json.builder.reader.value.ListValueReader;
-import org.shaobig.json.builder.reader.value.ValueReader;
-import org.shaobig.json.builder.reader.value.object.reader.EntityObjectReaderSupplier;
-import org.shaobig.json.builder.reader.value.object.reader.ListObjectReaderSupplier;
+import org.shaobig.json.builder.reader.value.*;
 
 import java.util.List;
 
@@ -67,10 +60,9 @@ public class JsonObject implements NodeCreator, ValueReader, ListValueReader {
 
         public Builder() {
             JsonNode jsonNode = new NewObjectNodeSupplier().supplyNode();
-            JsonNodeCreator jsonNodeCreator = new MergeJsonNodeCreator(jsonNode, new RecursiveNodeMerger(new NewObjectNodeSupplier(), new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>())), new NestedEntityNodeCreator(new NewObjectNodeSupplier(), new EntityNodeCreator(new NewObjectNodeSupplier())));
-            JsonPathReader pathReader = new NestedJsonPathReader(jsonNode);
-            EntityValueReader valueReader = new EntityValueReader(new EntityObjectReaderSupplier(), pathReader);
-            EntityListValueReader listValueReader = new EntityListValueReader(new ListObjectReaderSupplier(), pathReader);
+            JsonNodeCreator jsonNodeCreator = new JsonNodeCreatorEntityFactory(jsonNode).createEntity();
+            EntityValueReader valueReader = new EntityValueReaderEntityFactory(jsonNode).createEntity();
+            EntityListValueReader listValueReader = new EntityListValueReaderEntityFactory(jsonNode).createEntity();
             this.jsonObjectManager = new JsonObjectManager(jsonNode, new NodeCreatorManager(jsonNodeCreator), new ValueReaderManager(valueReader, listValueReader));
         }
 

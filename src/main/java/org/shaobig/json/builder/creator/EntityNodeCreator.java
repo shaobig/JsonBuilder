@@ -1,8 +1,6 @@
 package org.shaobig.json.builder.creator;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class EntityNodeCreator implements NodeCreator {
 
@@ -14,7 +12,7 @@ public class EntityNodeCreator implements NodeCreator {
 
     @Override
     public JsonNode createNode(String path, Object object) {
-        return new ObjectMapper().createObjectNode().putPOJO(path, object);
+        return getObjectNodeSupplier().supplyNode().putPOJO(path, object);
     }
 
     public NodeSupplier getObjectNodeSupplier() {
