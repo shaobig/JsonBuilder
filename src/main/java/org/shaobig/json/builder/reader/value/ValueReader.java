@@ -1,9 +1,7 @@
 package org.shaobig.json.builder.reader.value;
 
-import com.fasterxml.jackson.databind.JsonNode;
+public interface ValueReader {
 
-public interface ValueReader<T> {
-
-    T readValue(JsonNode objectNode);
+    <T> T readValue(String path, Class<T> valueType);
 
 }

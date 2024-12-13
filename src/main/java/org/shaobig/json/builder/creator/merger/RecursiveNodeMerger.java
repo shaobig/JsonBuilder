@@ -6,10 +6,10 @@ import org.shaobig.json.builder.creator.NodeSupplier;
 
 public class RecursiveNodeMerger implements NodeMerger<JsonNode> {
 
-    private NodeSupplier<ObjectNode> objectNodeSupplier;
+    private NodeSupplier objectNodeSupplier;
     private NodeMerger<ObjectNode> objectNodeNodeMerger;
 
-    public RecursiveNodeMerger(NodeSupplier<ObjectNode> objectNodeSupplier, NodeMerger<ObjectNode> objectNodeNodeMerger) {
+    public RecursiveNodeMerger(NodeSupplier objectNodeSupplier, NodeMerger<ObjectNode> objectNodeNodeMerger) {
         this.objectNodeSupplier = objectNodeSupplier;
         this.objectNodeNodeMerger = objectNodeNodeMerger;
     }
@@ -34,11 +34,11 @@ public class RecursiveNodeMerger implements NodeMerger<JsonNode> {
         return mergedNode;
     }
 
-    public NodeSupplier<ObjectNode> getObjectNodeSupplier() {
+    public NodeSupplier getObjectNodeSupplier() {
         return objectNodeSupplier;
     }
 
-    public void setObjectNodeSupplier(NodeSupplier<ObjectNode> objectNodeSupplier) {
+    public void setObjectNodeSupplier(NodeSupplier objectNodeSupplier) {
         this.objectNodeSupplier = objectNodeSupplier;
     }
 

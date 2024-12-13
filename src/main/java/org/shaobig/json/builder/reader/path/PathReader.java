@@ -1,7 +1,9 @@
 package org.shaobig.json.builder.reader.path;
 
-public interface PathReader<T> {
+import com.fasterxml.jackson.databind.JsonNode;
 
-    T readPath(String path);
+public interface PathReader {
+
+    JsonNode readPath(String path);
 
 }

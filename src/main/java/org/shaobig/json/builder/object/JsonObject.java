@@ -1,22 +1,27 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.object.builder.IntegerBuilderCreator;
+import org.shaobig.json.builder.creator.*;
+import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
+import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
+import org.shaobig.json.builder.creator.merger.stream.UnknownSizeSpliteratorSupplier;
+import org.shaobig.json.builder.object.builder.EntityBuilderCreator;
 import org.shaobig.json.builder.object.builder.JsonObjectBuilderCreator;
-import org.shaobig.json.builder.object.builder.ListBuilderCreator;
-import org.shaobig.json.builder.object.builder.StringBuilderCreator;
 import org.shaobig.json.builder.object.manager.JsonObjectManager;
-import org.shaobig.json.builder.object.manager.ProxyJsonObjectManagerEntityFactory;
-import org.shaobig.json.builder.object.manager.creator.IntegerNodeCreator;
-import org.shaobig.json.builder.object.manager.creator.ListNodeCreator;
-import org.shaobig.json.builder.object.manager.creator.StringNodeCreator;
-import org.shaobig.json.builder.reader.path.entity.IntegerPathReader;
-import org.shaobig.json.builder.reader.path.entity.ListPathReader;
-import org.shaobig.json.builder.reader.path.entity.StringPathReader;
+import org.shaobig.json.builder.object.manager.NodeCreatorManager;
+import org.shaobig.json.builder.object.manager.ValueReaderManager;
+import org.shaobig.json.builder.reader.path.JsonPathReader;
+import org.shaobig.json.builder.reader.path.NestedJsonPathReader;
+import org.shaobig.json.builder.reader.value.EntityListValueReader;
+import org.shaobig.json.builder.reader.value.EntityValueReader;
+import org.shaobig.json.builder.reader.value.ListValueReader;
+import org.shaobig.json.builder.reader.value.ValueReader;
+import org.shaobig.json.builder.reader.value.object.reader.EntityObjectReaderSupplier;
+import org.shaobig.json.builder.reader.value.object.reader.ListObjectReaderSupplier;
 
 import java.util.List;
 
-public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNodeCreator, StringPathReader, IntegerPathReader, ListPathReader {
+public class JsonObject implements NodeCreator, ValueReader, ListValueReader {
 
     private JsonObjectManager jsonObjectManager;
 
@@ -25,28 +30,13 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNo
     }
 
     @Override
-    public JsonNode createString(String path, String string) {
-        return getJsonObjectManager().createString(path, string);
+    public JsonNode createNode(String path, Object object) {
+        return getJsonObjectManager().createNode(path, object);
     }
 
     @Override
-    public JsonNode createInteger(String path, Integer integer) {
-        return getJsonObjectManager().createInteger(path, integer);
-    }
-
-    @Override
-    public JsonNode createList(String path, List<?> list) {
-        return getJsonObjectManager().createList(path, list);
-    }
-
-    @Override
-    public String readString(String path) {
-        return getJsonObjectManager().readString(path);
-    }
-
-    @Override
-    public Integer readInteger(String path) {
-        return getJsonObjectManager().readInteger(path);
+    public <T> T readValue(String path, Class<T> valueType) {
+        return getJsonObjectManager().readValue(path, valueType);
     }
 
     @Override
@@ -67,7 +57,7 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNo
         return getJsonObjectManager().toString();
     }
 
-    public static class Builder implements StringBuilderCreator, IntegerBuilderCreator, ListBuilderCreator, JsonObjectBuilderCreator {
+    public static class Builder implements EntityBuilderCreator, JsonObjectBuilderCreator {
 
         private JsonObjectManager jsonObjectManager;
 
@@ -76,24 +66,17 @@ public class JsonObject implements StringNodeCreator, IntegerNodeCreator, ListNo
         }
 
         public Builder() {
-            this(new ProxyJsonObjectManagerEntityFactory().createEntity());
+            JsonNode jsonNode = new NewObjectNodeSupplier().supplyNode();
+            JsonNodeCreator jsonNodeCreator = new MergeJsonNodeCreator(jsonNode, new RecursiveNodeMerger(new NewObjectNodeSupplier(), new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>())), new NestedEntityNodeCreator(new NewObjectNodeSupplier(), new EntityNodeCreator(new NewObjectNodeSupplier())));
+            JsonPathReader pathReader = new NestedJsonPathReader(jsonNode);
+            EntityValueReader valueReader = new EntityValueReader(new EntityObjectReaderSupplier(), pathReader);
+            EntityListValueReader listValueReader = new EntityListValueReader(new ListObjectReaderSupplier(), pathReader);
+            this.jsonObjectManager = new JsonObjectManager(jsonNode, new NodeCreatorManager(jsonNodeCreator), new ValueReaderManager(valueReader, listValueReader));
         }
 
         @Override
-        public Builder createString(String path, String string) {
-            getJsonBuilderManager().createString(path, string);
-            return this;
-        }
-
-        @Override
-        public Builder createInteger(String path, Integer integer) {
-            getJsonBuilderManager().createInteger(path, integer);
-            return this;
-        }
-
-        @Override
-        public Builder createList(String path, List<?> list) {
-            getJsonBuilderManager().createList(path, list);
+        public Builder createNode(String path, Object object) {
+            getJsonBuilderManager().createNode(path, object);
             return this;
         }
 

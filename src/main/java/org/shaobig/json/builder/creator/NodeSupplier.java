@@ -1,9 +1,9 @@
 package org.shaobig.json.builder.creator;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public interface NodeSupplier<T extends JsonNode> {
+public interface NodeSupplier {
 
-    T supplyNode();
+    ObjectNode supplyNode();
 
 }

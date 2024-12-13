@@ -3,29 +3,20 @@ package org.shaobig.json.builder.creator;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.creator.merger.NodeMerger;
 
-public class MergerNodeCreator<T> implements NodeCreator<T> {
+public class MergeJsonNodeCreator extends JsonNodeCreator {
 
-    private JsonNode jsonNode;
     private NodeMerger<JsonNode> nodeMerger;
-    private NodeCreator<T> nodeCreator;
+    private NodeCreator nodeCreator;
 
-    public MergerNodeCreator(JsonNode jsonNode, NodeMerger<JsonNode> nodeMerger, NodeCreator<T> nodeCreator) {
-        this.jsonNode = jsonNode;
+    public MergeJsonNodeCreator(JsonNode jsonNode, NodeMerger<JsonNode> nodeMerger, NodeCreator nodeCreator) {
+        super(jsonNode);
         this.nodeMerger = nodeMerger;
         this.nodeCreator = nodeCreator;
     }
 
     @Override
-    public JsonNode createNode(String path, T object) {
+    public JsonNode createNode(String path, Object object) {
         return getNodeMerger().mergeValue(getJsonNode(), getNodeCreator().createNode(path, object));
-    }
-
-    public JsonNode getJsonNode() {
-        return jsonNode;
-    }
-
-    public void setJsonNode(JsonNode jsonNode) {
-        this.jsonNode = jsonNode;
     }
 
     public NodeMerger<JsonNode> getNodeMerger() {
@@ -36,11 +27,11 @@ public class MergerNodeCreator<T> implements NodeCreator<T> {
         this.nodeMerger = nodeMerger;
     }
 
-    public NodeCreator<T> getNodeCreator() {
+    public NodeCreator getNodeCreator() {
         return nodeCreator;
     }
 
-    public void setNodeCreator(NodeCreator<T> nodeCreator) {
+    public void setNodeCreator(NodeCreator nodeCreator) {
         this.nodeCreator = nodeCreator;
     }
 
