@@ -1,67 +1,67 @@
 package org.shaobig.json.builder.object.manager;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.NodeCreator;
+import org.shaobig.json.builder.creator.ObjectCreator;
 import org.shaobig.json.builder.object.JsonNodeSetter;
-import org.shaobig.json.builder.reader.value.ListValueReader;
-import org.shaobig.json.builder.reader.value.ValueReader;
+import org.shaobig.json.builder.reader.value.ListObjectReader;
+import org.shaobig.json.builder.reader.value.ObjectReader;
 
 import java.util.List;
 
-public class JsonObjectManager implements NodeCreator, ValueReader, ListValueReader, JsonNodeSetter {
+public class JsonObjectManager implements ObjectCreator, ObjectReader, ListObjectReader, JsonNodeSetter {
 
     private JsonNode jsonNode;
-    private NodeCreatorManager nodeCreatorManager;
-    private ValueReaderManager valueReaderManager;
+    private ObjectCreatorManager objectCreatorManager;
+    private ObjectReaderManager objectReaderManager;
 
-    public JsonObjectManager(JsonNode jsonNode, NodeCreatorManager nodeCreatorManager, ValueReaderManager valueReaderManager) {
+    public JsonObjectManager(JsonNode jsonNode, ObjectCreatorManager objectCreatorManager, ObjectReaderManager objectReaderManager) {
         this.jsonNode = jsonNode;
-        this.nodeCreatorManager = nodeCreatorManager;
-        this.valueReaderManager = valueReaderManager;
+        this.objectCreatorManager = objectCreatorManager;
+        this.objectReaderManager = objectReaderManager;
     }
 
     @Override
-    public JsonNode createNode(String path, Object object) {
-        JsonNode jsonNode = getNodeCreatorManager().createNode(path, object);
+    public JsonNode createObject(String path, Object object) {
+        JsonNode jsonNode = getObjectCreatorManager().createObject(path, object);
         setJsonNode(jsonNode);
         return jsonNode;
     }
 
     @Override
     public <T> List<T> readList(String path, Class<T> valueType) {
-        return getValueReaderManager().readList(path, valueType);
+        return getObjectReaderManager().readList(path, valueType);
     }
 
     @Override
-    public <T> T readValue(String path, Class<T> valueType) {
-        return getValueReaderManager().readValue(path, valueType);
+    public <T> T readObject(String path, Class<T> valueType) {
+        return getObjectReaderManager().readObject(path, valueType);
     }
 
     @Override
     public void setJsonNode(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
-        getNodeCreatorManager().setJsonNode(jsonNode);
-        getValueReaderManager().setJsonNode(jsonNode);
+        getObjectCreatorManager().setJsonNode(jsonNode);
+        getObjectReaderManager().setJsonNode(jsonNode);
     }
 
     public JsonNode getJsonNode() {
         return jsonNode;
     }
 
-    public NodeCreatorManager getNodeCreatorManager() {
-        return nodeCreatorManager;
+    public ObjectCreatorManager getObjectCreatorManager() {
+        return objectCreatorManager;
     }
 
-    public void setNodeCreatorManager(NodeCreatorManager nodeCreatorManager) {
-        this.nodeCreatorManager = nodeCreatorManager;
+    public void setObjectCreatorManager(ObjectCreatorManager objectCreatorManager) {
+        this.objectCreatorManager = objectCreatorManager;
     }
 
-    public ValueReaderManager getValueReaderManager() {
-        return valueReaderManager;
+    public ObjectReaderManager getObjectReaderManager() {
+        return objectReaderManager;
     }
 
-    public void setValueReaderManager(ValueReaderManager valueReaderManager) {
-        this.valueReaderManager = valueReaderManager;
+    public void setObjectReaderManager(ObjectReaderManager objectReaderManager) {
+        this.objectReaderManager = objectReaderManager;
     }
 
     @Override

@@ -3,11 +3,11 @@ package org.shaobig.json.builder.creator;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.shaobig.json.builder.object.JsonNodeSetter;
 
-public abstract class JsonNodeCreator implements NodeCreator, JsonNodeSetter {
+public abstract class JsonObjectCreator implements ObjectCreator, JsonNodeSetter {
 
     private JsonNode jsonNode;
 
-    public JsonNodeCreator(JsonNode jsonNode) {
+    public JsonObjectCreator(JsonNode jsonNode) {
         this.jsonNode = jsonNode;
     }
 

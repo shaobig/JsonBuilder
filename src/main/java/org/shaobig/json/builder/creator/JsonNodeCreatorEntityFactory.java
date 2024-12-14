@@ -6,7 +6,7 @@ import org.shaobig.json.builder.creator.merger.CopyNodeMerger;
 import org.shaobig.json.builder.creator.merger.RecursiveNodeMerger;
 import org.shaobig.json.builder.creator.merger.stream.UnknownSizeSpliteratorSupplier;
 
-public class JsonNodeCreatorEntityFactory implements EntityFactory<JsonNodeCreator> {
+public class JsonNodeCreatorEntityFactory implements EntityFactory<JsonObjectCreator> {
 
     private JsonNode jsonNode;
 
@@ -15,9 +15,9 @@ public class JsonNodeCreatorEntityFactory implements EntityFactory<JsonNodeCreat
     }
 
     @Override
-    public JsonNodeCreator createEntity() {
+    public JsonObjectCreator createEntity() {
         NodeSupplier nodeSupplier = new NewObjectNodeSupplier();
-        return new MergeJsonNodeCreator(getJsonNode(), new RecursiveNodeMerger(nodeSupplier, new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>())), new NestedEntityNodeCreator(nodeSupplier, new EntityNodeCreator(nodeSupplier)));
+        return new MergeJsonObjectCreator(getJsonNode(), new RecursiveNodeMerger(nodeSupplier, new CopyNodeMerger(new UnknownSizeSpliteratorSupplier<>())), new NestedEntityObjectCreator(nodeSupplier, new EntityObjectCreator(nodeSupplier)));
     }
 
     public JsonNode getJsonNode() {

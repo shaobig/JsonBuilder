@@ -4,6 +4,6 @@ import org.shaobig.json.builder.object.JsonObject;
 
 public interface JsonObjectBuilderCreator {
 
-    JsonObject createJsonObject();
+    JsonObject build();
 
 }

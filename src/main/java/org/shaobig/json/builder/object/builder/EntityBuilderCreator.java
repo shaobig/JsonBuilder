@@ -4,6 +4,6 @@ import org.shaobig.json.builder.object.JsonObject;
 
 public interface EntityBuilderCreator {
 
-    JsonObject.Builder createNode(String path, Object object);
+    JsonObject.Builder createObject(String path, Object object);
 
 }

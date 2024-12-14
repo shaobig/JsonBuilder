@@ -4,25 +4,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 
-public class NestedEntityNodeCreator implements NodeCreator {
+public class NestedEntityObjectCreator implements ObjectCreator {
 
     private static final String KEY_DELIMITER_REG_EXP = "\\.";
 
     private NodeSupplier objectNodeSupplier;
-    private NodeCreator nodeCreator;
+    private ObjectCreator objectCreator;
 
-    public NestedEntityNodeCreator(NodeSupplier objectNodeSupplier, NodeCreator nodeCreator) {
+    public NestedEntityObjectCreator(NodeSupplier objectNodeSupplier, ObjectCreator objectCreator) {
         this.objectNodeSupplier = objectNodeSupplier;
-        this.nodeCreator = nodeCreator;
+        this.objectCreator = objectCreator;
     }
 
     @Override
-    public JsonNode createNode(String path, Object object) {
+    public JsonNode createObject(String path, Object object) {
         List<String> keyList = List.of(path.split(KEY_DELIMITER_REG_EXP));
         int lastKeyIndex = keyList.size() - 1;
         return keyList.subList(0, lastKeyIndex).stream()
                 .sorted((o1, o2) -> keyList.indexOf(o2) - keyList.indexOf(o1))
-                .reduce(getNodeCreator().createNode(keyList.get(lastKeyIndex), object), (objectNode, key) -> getObjectNodeSupplier().supplyNode().set(key, objectNode), (objectNode, objectNode2) -> objectNode);
+                .reduce(getNodeCreator().createObject(keyList.get(lastKeyIndex), object), (objectNode, key) -> getObjectNodeSupplier().supplyNode().set(key, objectNode), (objectNode, objectNode2) -> objectNode);
 
     }
 
@@ -34,12 +34,12 @@ public class NestedEntityNodeCreator implements NodeCreator {
         this.objectNodeSupplier = objectNodeSupplier;
     }
 
-    public NodeCreator getNodeCreator() {
-        return nodeCreator;
+    public ObjectCreator getNodeCreator() {
+        return objectCreator;
     }
 
-    public void setNodeCreator(NodeCreator nodeCreator) {
-        this.nodeCreator = nodeCreator;
+    public void setNodeCreator(ObjectCreator objectCreator) {
+        this.objectCreator = objectCreator;
     }
 
 }

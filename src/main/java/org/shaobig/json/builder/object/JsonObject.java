@@ -1,20 +1,17 @@
 package org.shaobig.json.builder.object;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.shaobig.json.builder.creator.JsonNodeCreator;
-import org.shaobig.json.builder.creator.JsonNodeCreatorEntityFactory;
-import org.shaobig.json.builder.creator.NewObjectNodeSupplier;
-import org.shaobig.json.builder.creator.NodeCreator;
+import org.shaobig.json.builder.creator.ObjectCreator;
 import org.shaobig.json.builder.object.builder.EntityBuilderCreator;
 import org.shaobig.json.builder.object.builder.JsonObjectBuilderCreator;
 import org.shaobig.json.builder.object.manager.JsonObjectManager;
-import org.shaobig.json.builder.object.manager.NodeCreatorManager;
-import org.shaobig.json.builder.object.manager.ValueReaderManager;
-import org.shaobig.json.builder.reader.value.*;
+import org.shaobig.json.builder.object.manager.JsonObjectManagerEntityFactory;
+import org.shaobig.json.builder.reader.value.ListObjectReader;
+import org.shaobig.json.builder.reader.value.ObjectReader;
 
 import java.util.List;
 
-public class JsonObject implements NodeCreator, ValueReader, ListValueReader {
+public class JsonObject implements ObjectCreator, ObjectReader, ListObjectReader {
 
     private JsonObjectManager jsonObjectManager;
 
@@ -23,13 +20,13 @@ public class JsonObject implements NodeCreator, ValueReader, ListValueReader {
     }
 
     @Override
-    public JsonNode createNode(String path, Object object) {
-        return getJsonObjectManager().createNode(path, object);
+    public JsonNode createObject(String path, Object object) {
+        return getJsonObjectManager().createObject(path, object);
     }
 
     @Override
-    public <T> T readValue(String path, Class<T> valueType) {
-        return getJsonObjectManager().readValue(path, valueType);
+    public <T> T readObject(String path, Class<T> valueType) {
+        return getJsonObjectManager().readObject(path, valueType);
     }
 
     @Override
@@ -59,21 +56,17 @@ public class JsonObject implements NodeCreator, ValueReader, ListValueReader {
         }
 
         public Builder() {
-            JsonNode jsonNode = new NewObjectNodeSupplier().supplyNode();
-            JsonNodeCreator jsonNodeCreator = new JsonNodeCreatorEntityFactory(jsonNode).createEntity();
-            EntityValueReader valueReader = new EntityValueReaderEntityFactory(jsonNode).createEntity();
-            EntityListValueReader listValueReader = new EntityListValueReaderEntityFactory(jsonNode).createEntity();
-            this.jsonObjectManager = new JsonObjectManager(jsonNode, new NodeCreatorManager(jsonNodeCreator), new ValueReaderManager(valueReader, listValueReader));
+            this(new JsonObjectManagerEntityFactory().createEntity());
         }
 
         @Override
-        public Builder createNode(String path, Object object) {
-            getJsonBuilderManager().createNode(path, object);
+        public Builder createObject(String path, Object object) {
+            getJsonBuilderManager().createObject(path, object);
             return this;
         }
 
         @Override
-        public JsonObject createJsonObject() {
+        public JsonObject build() {
             return new JsonObject(getJsonBuilderManager());
         }
 

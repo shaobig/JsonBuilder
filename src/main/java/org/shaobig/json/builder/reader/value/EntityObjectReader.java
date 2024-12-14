@@ -1,30 +1,30 @@
 package org.shaobig.json.builder.reader.value;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.shaobig.json.builder.exception.WrongClassException;
 import org.shaobig.json.builder.object.JsonNodeSetter;
 import org.shaobig.json.builder.reader.path.JsonPathReader;
 import org.shaobig.json.builder.reader.value.object.reader.ObjectReaderSupplier;
 
 import java.io.IOException;
-import java.util.List;
 
-public class EntityListValueReader implements ListValueReader, JsonNodeSetter {
+public class EntityObjectReader implements ObjectReader, JsonNodeSetter {
 
     private ObjectReaderSupplier objectReaderSupplier;
     private JsonPathReader jsonPathReader;
 
-    public EntityListValueReader(ObjectReaderSupplier objectReaderSupplier, JsonPathReader jsonPathReader) {
+    public EntityObjectReader(ObjectReaderSupplier objectReaderSupplier, JsonPathReader jsonPathReader) {
         this.objectReaderSupplier = objectReaderSupplier;
         this.jsonPathReader = jsonPathReader;
     }
 
     @Override
-    public <T> List<T> readList(String path, Class<T> valueType) {
+    public <T> T readObject(String path, Class<T> valueType) {
         try {
             return getObjectReaderSupplier().getObjectReader(valueType).readValue(getJsonPathReader().readPath(path).toString());
         }
         catch (IOException e) {
-            throw new RuntimeException("ABC");
+            throw new WrongClassException(String.format("Can't cast the '%s' path value to %s", path, valueType));
         }
     }
 

@@ -5,7 +5,7 @@ import org.shaobig.json.builder.EntityFactory;
 import org.shaobig.json.builder.reader.path.NestedJsonPathReader;
 import org.shaobig.json.builder.reader.value.object.reader.EntityObjectReaderSupplier;
 
-public class EntityValueReaderEntityFactory implements EntityFactory<EntityValueReader> {
+public class EntityValueReaderEntityFactory implements EntityFactory<EntityObjectReader> {
 
     private JsonNode jsonNode;
 
@@ -14,8 +14,8 @@ public class EntityValueReaderEntityFactory implements EntityFactory<EntityValue
     }
 
     @Override
-    public EntityValueReader createEntity() {
-        return new EntityValueReader(new EntityObjectReaderSupplier(),  new NestedJsonPathReader(getJsonNode()));
+    public EntityObjectReader createEntity() {
+        return new EntityObjectReader(new EntityObjectReaderSupplier(),  new NestedJsonPathReader(getJsonNode()));
     }
 
     public JsonNode getJsonNode() {
