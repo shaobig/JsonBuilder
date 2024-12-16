@@ -2,34 +2,37 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.example</groupId>
-  <artifactId>org.shaobig.json.builder</artifactId>
+  <groupId>org.shaobig</groupId>
+  <artifactId>JsonBuilder</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>org.shaobig.json.builder</name>
+  <name>JsonBuilder</name>
 
   <properties>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.source>17</maven.compiler.source>
+    <junit.version>4.13.2</junit.version>
+    <jackson.version>2.17.2</jackson.version>
+    <json.path.version>2.9.0</json.path.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.17.2</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
-      <version>2.9.0</version>
+      <version>${json.path.version}</version>
     </dependency>
   </dependencies>
 
