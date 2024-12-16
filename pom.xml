@@ -2,12 +2,26 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.shaobig</groupId>
-  <artifactId>JsonBuilder</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>io.shaobig</groupId>
+  <artifactId>json-builder</artifactId>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>JsonBuilder</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A library that facilitates the work with nested values inside the JSON abstraction</description>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/shaobig/json-builder</connection>
+    <developerConnection>scm:git:ssh://github.com/shaobig/json-builder</developerConnection>
+    <url>http://github.com/shaobig/json-builder/tree/release/1.0.0</url>
+  </scm>
 
   <properties>
     <maven.compiler.target>17</maven.compiler.target>
