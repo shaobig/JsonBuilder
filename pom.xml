@@ -26,19 +26,24 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/shaobig/json-builder</connection>
-    <developerConnection>scm:git:ssh://github.com/shaobig/json-builder</developerConnection>
-    <url>http://github.com/shaobig/json-builder/tree/release/1.0.0</url>
+    <connection>scm:git:git://${repository.url}</connection>
+    <developerConnection>scm:git:ssh://${repository.url}</developerConnection>
+    <url>http://${repository.url}/tree/${repository.branch.name}</url>
   </scm>
 
   <properties>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.source>17</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <junit.version>4.13.2</junit.version>
     <jackson.version>2.18.1</jackson.version>
-    <branch.name>release/1.0.0</branch.name>
-    <repository.name>json-builder</repository.name>
+
+    <repository.name>${project.artifactId}</repository.name>
+    <repository.url>github.com/shaobig/${repository.name}</repository.url>
     <repository.owner>shaobig</repository.owner>
+    <repository.branch.name>release/1.0.0</repository.branch.name>
   </properties>
 
   <dependencies>
@@ -88,7 +93,7 @@
             <message>Maven artifacts for ${project.version}</message>
             <noJekyll>true</noJekyll>
             <outputDirectory>${project.build.directory}</outputDirectory>
-            <branch>refs/heads/${branch.name}</branch>
+            <branch>refs/heads/${repository.branch.name}</branch>
             <includes>
               <include>**/*</include>
             </includes>
