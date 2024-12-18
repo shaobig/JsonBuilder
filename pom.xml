@@ -2,18 +2,48 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.shaobig</groupId>
-  <artifactId>JsonBuilder</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>io.shaobig</groupId>
+  <artifactId>json-builder</artifactId>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>JsonBuilder</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A library that facilitates the work with nested values inside the JSON abstraction</description>
+
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-artifact</url>
+    </repository>
+  </distributionManagement>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://${repository.url}</connection>
+    <developerConnection>scm:git:ssh://${repository.url}</developerConnection>
+    <url>http://${repository.url}/tree/${repository.branch.name}</url>
+  </scm>
 
   <properties>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.source>17</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <junit.version>4.13.2</junit.version>
     <jackson.version>2.18.1</jackson.version>
+
+    <repository.name>${project.artifactId}</repository.name>
+    <repository.url>github.com/shaobig/${repository.name}</repository.url>
+    <repository.owner>shaobig</repository.owner>
+    <repository.branch.name>release/1.0.0</repository.branch.name>
   </properties>
 
   <dependencies>
@@ -29,5 +59,60 @@
       <version>${jackson.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+          <configuration>
+            <altDeploymentRepository>
+              internal.repo::default::file://${project.build.directory}/mvn-artifact
+            </altDeploymentRepository>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.1.0</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>0.12</version>
+          <configuration>
+            <message>Maven artifacts for ${project.version}</message>
+            <noJekyll>true</noJekyll>
+            <outputDirectory>${project.build.directory}</outputDirectory>
+            <branch>refs/heads/${repository.branch.name}</branch>
+            <includes>
+              <include>**/*</include>
+            </includes>
+            <merge>true</merge>
+            <repositoryName>${repository.name}</repositoryName>
+            <repositoryOwner>${repository.owner}</repositoryOwner>
+            <server>github</server>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>site</goal>
+              </goals>
+              <phase>deploy</phase>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
 </project>
