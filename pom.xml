@@ -4,7 +4,7 @@
 
   <groupId>io.shaobig</groupId>
   <artifactId>json-builder</artifactId>
-  <version>1.0</version>
+  <version>1.1.0</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -43,7 +43,7 @@
     <repository.name>${project.artifactId}</repository.name>
     <repository.url>github.com/shaobig/${repository.name}</repository.url>
     <repository.owner>shaobig</repository.owner>
-    <repository.branch.name>release/1.0.0</repository.branch.name>
+    <repository.branch.name>release/${version}</repository.branch.name>
   </properties>
 
   <dependencies>

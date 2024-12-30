@@ -3,6 +3,7 @@ package io.shaobig.json.builder.object;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.shaobig.json.builder.creator.ObjectCreator;
 import io.shaobig.json.builder.object.builder.EntityBuilderCreator;
+import io.shaobig.json.builder.object.builder.JsonNodeJsonObjectBuilderCreator;
 import io.shaobig.json.builder.object.builder.JsonObjectBuilderCreator;
 import io.shaobig.json.builder.object.manager.JsonObjectManager;
 import io.shaobig.json.builder.object.manager.JsonObjectManagerEntityFactory;
@@ -47,7 +48,7 @@ public class JsonObject implements ObjectCreator, ObjectReader, ListObjectReader
         return getJsonObjectManager().toString();
     }
 
-    public static class Builder implements EntityBuilderCreator, JsonObjectBuilderCreator {
+    public static class Builder implements EntityBuilderCreator, JsonObjectBuilderCreator, JsonNodeJsonObjectBuilderCreator {
 
         private JsonObjectManager jsonObjectManager;
 
@@ -68,6 +69,12 @@ public class JsonObject implements ObjectCreator, ObjectReader, ListObjectReader
         @Override
         public JsonObject build() {
             return new JsonObject(getJsonBuilderManager());
+        }
+
+        @Override
+        public JsonObject build(JsonNode jsonNode) {
+            getJsonBuilderManager().setJsonNode(jsonNode);
+            return build();
         }
 
         public JsonObjectManager getJsonBuilderManager() {
