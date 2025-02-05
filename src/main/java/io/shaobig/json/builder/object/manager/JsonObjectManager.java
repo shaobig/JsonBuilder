@@ -7,6 +7,7 @@ import io.shaobig.json.builder.reader.value.ListObjectReader;
 import io.shaobig.json.builder.reader.value.ObjectReader;
 
 import java.util.List;
+import java.util.Objects;
 
 public class JsonObjectManager implements ObjectCreator, ObjectReader, ListObjectReader, JsonNodeSetter {
 
@@ -69,4 +70,16 @@ public class JsonObjectManager implements ObjectCreator, ObjectReader, ListObjec
         return getJsonNode().toString();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        JsonObjectManager that = (JsonObjectManager) object;
+        return Objects.equals(jsonNode, that.jsonNode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(jsonNode);
+    }
 }
